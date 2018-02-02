@@ -1,0 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors_table.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/28 15:51:29 by upopee            #+#    #+#             */
+/*   Updated: 2018/02/02 15:10:03 by upopee           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef COLORS_TABLE_H
+# define COLORS_TABLE_H
+
+# define C_EOC "\e[0m"
+# define CF_DEFAULT "\e[39m"
+# define CF_BLACK "\e[30m"
+# define CF_WHITE "\e[97m"
+# define CF_RED "\e[31m"
+# define CF_GREEN "\e[32m"
+# define CF_YELLOW "\e[33m"
+# define CF_BLUE "\e[34m"
+# define CF_MAGENTA "\e[35m"
+# define CF_CYAN "\e[36m"
+
+# define NB_COLORS 10
+# define COLOR_MAX_LEN 10
+
+char	g_colors_table[NB_COLORS][COLOR_MAX_LEN] =
+{
+	C_EOC,
+	CF_DEFAULT,
+	CF_BLACK,
+	CF_WHITE,
+	CF_RED,
+	CF_GREEN,
+	CF_YELLOW,
+	CF_BLUE,
+	CF_MAGENTA,
+	CF_CYAN
+};
+
+char	g_colors_ref_table[NB_COLORS][COLOR_MAX_LEN] =
+{
+	"EOC}",
+	"DEFAULT}",
+	"BLACK}",
+	"WHITE}",
+	"RED}",
+	"GREEN}",
+	"YELLOW}",
+	"BLUE}",
+	"MAGENTA}",
+	"CYAN}"
+};
+
+#endif
