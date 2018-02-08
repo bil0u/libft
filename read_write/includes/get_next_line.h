@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 16:06:13 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:57:56 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/07 23:15:01 by Bilou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,5 @@ typedef struct		s_file
 	int				rd_len;
 	unsigned int	remaining;
 }					t_file;
-
-int					get_next_line(const int fd, char **line);
 
 #endif

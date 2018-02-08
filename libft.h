@@ -6,12 +6,16 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:44:25 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 16:36:41 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/08 01:35:23 by Bilou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# define BSET(x, bit) ((x) |= (bit))
+# define BUNSET(x, bit) ((x) &= ~(bit))
+# define BIS_SET(x, bit) (((x) & (bit)) != 0)
 
 # include "./characters/includes/characters.h"
 # include "./ft_printf/includes/ft_printf.h"

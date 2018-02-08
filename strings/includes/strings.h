@@ -6,7 +6,7 @@
 /*   By: Bilou <Bilou@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by Bilou             #+#    #+#             */
-/*   Updated: 2018/02/02 13:46:05 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/07 23:20:39 by Bilou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stddef.h>
 
 char	*ft_strnew(size_t size);
-void	ft_strdel(char**as);
+void	ft_strdel(char **as);
 void	ft_strclr(char *s);
 char	*ft_strcpy(char *dst, const char *src);
 char	*ft_strncpy(char *dst, const char *src, size_t len);
