@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:56:33 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/07 23:38:30 by Bilou            ###   ########.fr       */
+/*   Updated: 2018/02/08 02:07:32 by Bilou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	ft_strdel(char **as)
 {
-	if (as)
+	if (as && *as)
 	{
-		if (*as)
-			free(*as);
-		as = NULL;
+		free(*as);
+		*as = NULL;
 	}
 }
