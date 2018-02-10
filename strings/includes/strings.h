@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/08 06:23:01 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/10 23:46:03 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ size_t	ft_nbwords(char const *s, int c);
 size_t	ft_wordlen(char const *s, char c);
 int		ft_strisnumber(char *str, char stop);
 int		ft_strishex(char *str, char stop);
+char	*ft_nextws(char *str, unsigned int skip_first);
 
 void	ft_striter(char *s, void (*f)(char *));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));

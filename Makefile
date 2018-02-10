@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/02 13:42:57 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/10 23:10:17 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,6 +107,8 @@ STR_FILES =			ft_strnew \
 					\
 					ft_strisnumber \
 					ft_strishex \
+					\
+					ft_nextws \
 
 WSTR_DIR = wide_strings/$(SRC_DIR)
 WSTR_INC = -I wide_strings/$(INC_DIR)
