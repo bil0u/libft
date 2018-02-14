@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/10 23:10:17 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/14 00:14:15 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -151,6 +151,7 @@ MATH_FILES =		ft_atoi \
 					ft_power \
 					ft_pgcd \
 					ft_swap \
+					ft_factorl \
 
 FT_PRINTF_DIR = ft_printf/$(SRC_DIR)
 FT_PRINTF_INC = -I ft_printf/$(INC_DIR)
