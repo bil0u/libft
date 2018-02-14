@@ -6,22 +6,33 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/14 00:14:15 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/14 17:23:32 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -- VARIABLES --
 
-# Name
 NAME = libft.a
-
-# Compiler
 CC = gcc
-
-# Flags
 CFLAGS = -Wall -Werror -Wextra $(INCLUDES)
+AR = ar -rc
+LINK = ar -s
+NEW_DIR = mkdir -p
+DEL_DIR = rm -rf
+DEL_FILE = rm -f
 
-# Paths
+# -- COLORS --
+
+YELLOW_BOLD = \e[31;33;1m
+GREEN = \e[32m
+GREEN_BOLD = \e[32;1m
+RED = \e[31m
+RED_BOLD = \e[31;1m
+WHITE_BOLD = \e[37;1m
+EOC = \e[0m
+
+# -- PATHS --
+
 SRC_DIR = sources
 INC_DIR = includes
 OBJ_DIR = .objects
@@ -30,7 +41,8 @@ VPATH =		$(MEMORY_DIR):$(CHAR_DIR):$(STR_DIR):$(WSTR_DIR):$(MATH_DIR):$(FT_PRINT
 INCLUDES =	$(MEMORY_INC) $(CHAR_INC) $(STR_INC) $(WSTR_INC) $(MATH_INC) $(FT_PRINTF_INC) $(LIST_INC) $(RW_INC)
 OBJECTS =	$(MEMORY_OBJ) $(CHAR_OBJ) $(STR_OBJ) $(WSTR_OBJ) $(MATH_OBJ) $(FT_PRINTF_OBJ) $(LIST_OBJ) $(RW_OBJ)
 
-# Sources files
+# -- FILES --
+
 MEMORY_DIR = memory/$(SRC_DIR)
 MEMORY_INC = -I memory/$(INC_DIR)
 MEMORY_SRC = $(patsubst %,$(MEMORY_DIR)/%,$(MEMORY_FILES:=.c))
@@ -235,47 +247,44 @@ RW_FILES =		get_next_line \
 					ft_putnbr \
 					ft_putnbr_fd \
 
-# Objects
+# -- IMPLICIT RULES --
+
+$(OBJ_DIR)/%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS)
+	printf "$(GREEN).$(EOC)"
 
 # -- RULES --
 
 all: prep $(NAME)
 
 $(NAME):
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[32mCreating objects\e[0m "
+	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(GREEN)Creating objects$(EOC) "
 	make obj
 	printf "\n"
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[32mCreating Library\e[0m "
-	ar rc $(NAME) $(OBJECTS)
-	ar -s $(NAME)
-	printf "\t\e[37;1m[\e[32;1mDONE\e[0m\e[37;1m]\e[0m\n"
+	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(GREEN)Creating Library$(EOC) "
+	$(AR) $(NAME) $(OBJECTS)
+	$(LINK) $(NAME)
+	printf "\t$(WHITE_BOLD)[$(GREEN_BOLD)DONE$(WHITE_BOLD)]$(EOC)\n"
 
 obj: $(OBJECTS)
 	echo >> /dev/null
 
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
-	printf "\e[32m.\e[0m"
-
 clean:
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[31mDeleting objects\e[0m "
-	rm -rf $(OBJ_DIR)
-	printf "\t\e[37;1m[\e[31;1mX\e[0m\e[37;1m]\e[0m\n"
+	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(RED)Deleting objects$(EOC) "
+	$(DEL_DIR) $(OBJ_DIR)
+	printf "\t$(WHITE_BOLD)[$(RED_BOLD)X$(WHITE_BOLD)]$(EOC)\n"
 
 fclean: clean
-	printf "> \e[31;33;1m$(NAME)\e[0m : \e[31mDeleting binary\e[0m "
-	rm -f $(NAME)
-	printf "\t\e[37;1m[\e[31;1mX\e[0m\e[37;1m]\e[0m\n"
+	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(RED)Deleting binary$(EOC) "
+	$(DEL_FILE) $(NAME)
+	printf "\t$(WHITE_BOLD)[$(RED_BOLD)X$(WHITE_BOLD)]$(EOC)\n"
 
 re: fclean all
 
 lib: all clean
 
 prep:
-	mkdir -p $(OBJ_DIR)
-
-# This rule allow the library build process to complete even if there are
-# files named 'all, clean, fclean, re, lib' in the working directory
+	$(NEW_DIR) $(OBJ_DIR)
 
 .PHONY: all obj clean fclean re lib prep
 
