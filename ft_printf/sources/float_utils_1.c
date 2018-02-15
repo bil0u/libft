@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:25:46 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:23:51 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:16:13 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_rawfloat	float_to_raw(t_conv *c, va_list *args)
 {
 	double			tmp64;
 	long double		tmp128;
-	uint128_t		raw128;
+	t_uint128_t		raw128;
 	t_rawfloat		f;
 
 	ft_bzero(&f, sizeof(f));
@@ -54,7 +54,7 @@ static void			reduce_frac(t_fraction *frac)
 
 t_rawfloat			rawfloat_fromarg(t_conv *c, va_list *args)
 {
-	uint128_t		power;
+	t_uint128_t		power;
 	t_rawfloat		f;
 
 	f = float_to_raw(c, args);
@@ -82,7 +82,7 @@ t_rawfloat			rawfloat_fromarg(t_conv *c, va_list *args)
 
 char				*get_decimal_base10(t_fraction *frac, t_mod *m, int prec)
 {
-	uint128_t	nbr;
+	t_uint128_t	nbr;
 	int			i;
 	char		*buff;
 

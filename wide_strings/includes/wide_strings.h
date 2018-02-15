@@ -6,14 +6,14 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/08 06:26:08 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:17:21 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef WIDE_STRINGS_H
 # define WIDE_STRINGS_H
 
-#include <stddef.h>
+# include <stddef.h>
 
 size_t		ft_wcharlen(wchar_t wc);
 int			ft_wchar_to_str(wchar_t wc, char *dst);

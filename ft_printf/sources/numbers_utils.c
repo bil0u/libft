@@ -6,15 +6,15 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/19 03:55:42 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:20:41 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:11:59 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <stddef.h>
-# include "ft_printf_structs.h"
-# include "maths.h"
-# include "memory.h"
-# include "strings.h"
+#include <stddef.h>
+#include "ft_printf_structs.h"
+#include "maths.h"
+#include "memory.h"
+#include "strings.h"
 
 char	*utoa_base_prec(uintmax_t n, t_mod *m, size_t sz)
 {

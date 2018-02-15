@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/14 00:33:56 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:14:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define BASE_16_UPPER "0123456789ABCDEF"
 # define DECIMAL_SEPARATOR '.'
 
-typedef __uint128_t uint128_t;
+typedef __uint128_t	t_uint128_t;
 
 int				ft_atoi(const char *str);
 int				ft_atoi_base(const char *str, const char *base);
@@ -43,7 +43,7 @@ char			*ft_ltoa(long int n);
 char			*ft_ltoa_base(long int n, const char *base);
 char			*ft_imaxtoa(intmax_t n);
 char			*ft_imaxtoa_base(intmax_t n, const char *base);
-size_t			ft_nbrlen_base(uint128_t n, unsigned int base_n);
+size_t			ft_nbrlen_base(t_uint128_t n, unsigned int base_n);
 intmax_t		ft_sqrt(intmax_t nb);
 intmax_t		ft_sqrt_next(intmax_t nb);
 intmax_t		ft_power(intmax_t nb, int p);

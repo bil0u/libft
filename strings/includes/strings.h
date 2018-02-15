@@ -6,14 +6,14 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/10 23:46:03 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:17:05 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRINGS_H
 # define STRINGS_H
 
-#include <stddef.h>
+# include <stddef.h>
 
 char	*ft_strnew(size_t size);
 void	ft_strdel(char **as);

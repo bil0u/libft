@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:30:22 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:22:48 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 12:15:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@
 typedef struct		s_fraction
 {
 	int				sign;
-	uint128_t		num;
-	uint128_t		den;
+	t_uint128_t		num;
+	t_uint128_t		den;
 }					t_fraction;
 
 typedef struct		s_rawfloat
 {
 	size_t			exp_size;
 	size_t			man_size;
-	uint128_t		raw_isneg;
-	uint128_t		raw_exponent;
-	uint128_t		raw_intpart;
-	uint128_t		raw_mantissa;
+	t_uint128_t		raw_isneg;
+	t_uint128_t		raw_exponent;
+	t_uint128_t		raw_intpart;
+	t_uint128_t		raw_mantissa;
 	t_fraction		frac;
 }					t_rawfloat;
 
