@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 16:06:01 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:58:41 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 18:03:26 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static size_t	read_line(t_file *file, char **line)
 	{
 		to_read = file->buff + file->rd_len - file->index;
 		end = (char *)ft_memchr(file->index, NEWLINE_CHAR, to_read);
-		len = (end == NULL ? to_read : end - file->index);
+		len = (end == NULL ? to_read : (size_t)(end - file->index));
 		*line = ft_strnew(len);
 		*line = ft_memmove(*line, file->index, len);
 		file->index = (end == NULL ? NULL : end + 1);
