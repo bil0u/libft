@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 16:56:19 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:26:57 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 18:01:54 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void		go_to_next(t_env *e)
 		next = next_arg;
 	else
 		next = next_arg < next_color ? next_arg : next_color;
-	len = next == NULL ? ft_strlen(e->format) : next - e->format;
+	len = next == NULL ? (int)ft_strlen(e->format) : next - e->format;
 	cpy_to_lst(e, e->format, len);
 	e->format += len;
 }
