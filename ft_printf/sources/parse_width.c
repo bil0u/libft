@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 18:57:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:28:45 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 17:59:23 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		width_asterisk(t_env *e, va_list *args, t_conv *mod)
 		mod->left_justify = 1;
 		mod->pad_zeroes = 0;
 	}
-	mod->width = ABS(width);
+	mod->width = ft_abs(width);
 	e->format++;
 	return (0);
 }

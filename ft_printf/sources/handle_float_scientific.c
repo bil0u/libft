@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 18:40:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:36:51 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 18:00:16 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char		*frac_to_sci(t_fraction *frac, t_conv *c, t_mod *m, char curr)
 		p = power_pos_b10(&nbr, frac, c, m);
 	else
 		p = power_neg_b10(&nbr, frac, c, m);
-	exponent = utoa_base_prec(ABS(p), m, 2);
+	exponent = utoa_base_prec(ft_abs(p), m, 2);
 	nbr_len = ft_strlen(nbr);
 	m->a_len = nbr_len + 2 + ft_strlen(exponent);
 	dst = ft_strnew(m->a_len);

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/15 12:14:27 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 17:56:09 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stddef.h>
 # include <stdint.h>
 
-# define ABS(x) ((x) < 0 ? -(x) : (x))
 # define OPP(x) (-(x))
 # define MIN(x1, x2) ((x1) < (x2) ? (x1) : (x2))
 # define MAX(x1, x2) ((x1) < (x2) ? (x2) : (x1))
@@ -50,5 +49,6 @@ intmax_t		ft_power(intmax_t nb, int p);
 intmax_t		ft_pgcd(intmax_t a, intmax_t b);
 unsigned int	ft_factorl(unsigned int nbr);
 void			ft_swap(int *a, int *b);
+int				ft_abs(int n);
 
 #endif

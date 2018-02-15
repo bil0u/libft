@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 18:39:10 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:34:29 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 18:00:02 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		spec_digit(t_env *e, va_list *args, t_conv *c)
 	tmp = get_vararg_signed(c, args);
 	if (tmp < 0)
 		c->prefix = "-";
-	nbr = ABS(tmp);
+	nbr = ft_abs(tmp);
 	init_mod_nbr(c, &m, nbr);
 	apply_parsing_nbr(c, &m);
 	str = utoa_base_prec(nbr, &m, m.a_len);
@@ -123,7 +123,7 @@ int		spec_binary(t_env *e, va_list *args, t_conv *c)
 	tmp = get_vararg_signed(c, args);
 	if (tmp < 0)
 		c->prefix = "-";
-	nbr = ABS(tmp);
+	nbr = ft_abs(tmp);
 	init_mod_nbr(c, &m, nbr);
 	apply_parsing_nbr(c, &m);
 	str = utoa_base_prec(nbr, &m, m.a_len);

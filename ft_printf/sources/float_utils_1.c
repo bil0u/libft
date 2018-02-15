@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:25:46 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/15 12:16:13 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 17:58:26 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_rawfloat			rawfloat_fromarg(t_conv *c, va_list *args)
 	if (f.raw_intpart == 1)
 		f.frac.num += f.frac.den;
 	if (EXP_VAL(f) < 0)
-		f.frac.den *= TWO_EXP(ABS(EXP_VAL(f)));
+		f.frac.den *= TWO_EXP(ft_abs(EXP_VAL(f)));
 	else
 		f.frac.num *= TWO_EXP(EXP_VAL(f));
 	f.frac.sign = (f.raw_isneg ? -1 : 1);

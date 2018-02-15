@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:53:28 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:59:55 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 18:00:40 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ft_putnbr_fd(int n, int fd)
 	if (n < 0)
 	{
 		ft_putchar_fd('-', fd);
-		n = ABS(n);
+		n = ft_abs(n);
 		len++;
 	}
 	while (n / range > 9)

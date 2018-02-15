@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 18:23:05 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/08 06:24:30 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 17:57:40 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ char	*ft_imaxtoa_base(intmax_t n, const char *base)
 
 	neg = (n < 0) ? 1 : 0;
 	base_n = ft_strlen((char *)base);
-	len = ft_nbrlen_base(ABS(n), base_n);
+	len = ft_nbrlen_base(ft_abs(n), base_n);
 	if (!(nbr = ft_strnew(len + neg)))
 		return (NULL);
 	if (neg)
 		nbr[0] = '-';
 	while (len-- > 0)
 	{
-		nbr[len + neg] = base[ABS(n % base_n)];
+		nbr[len + neg] = base[ft_abs(n % base_n)];
 		n /= (int)base_n;
 	}
 	return (nbr);
