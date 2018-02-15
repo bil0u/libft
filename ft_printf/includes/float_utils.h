@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 14:30:22 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/15 12:15:27 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/15 16:36:40 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "maths.h"
 # include "ft_printf_structs.h"
 
-# define E_OFFSET(f) ( (1 << (f.exp_size - 1)) - 1 )
-# define E_OVERFLOW(f) ( (1 << f.exp_size) - 1 )
+# define E_OFFSET(f) ( (1ULL << (f.exp_size - 1)) - 1 )
+# define E_OVERFLOW(f) ( (1ULL << f.exp_size) - 1 )
 # define M_OVERFLOW(f) ( (1ULL << f.man_size) - 1 )
 
 # define EXP_VAL(f) ((f.raw_exponent ? (int)f.raw_exponent : 1) - E_OFFSET(f))
