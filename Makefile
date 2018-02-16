@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/15 17:56:23 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/16 14:00:12 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -202,6 +202,7 @@ LIST_INC = -I linked_lists/$(INC_DIR)
 LIST_SRC = $(patsubst %,$(LIST_DIR)/%,$(LIST_FILES:=.c))
 LIST_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(LIST_FILES:=.o))
 LIST_FILES =		ft_lstnew \
+					ft_lstnew_nm \
 					ft_lstdel \
 					ft_lstdelone \
 					ft_lstdelthis \

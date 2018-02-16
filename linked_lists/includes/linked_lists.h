@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/15 12:13:21 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/16 14:08:07 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct		s_list
 }					t_list;
 
 t_list				*ft_lstnew(void const *content, size_t content_size);
+t_list				*ft_lstnew_nm(void const *content, size_t content_size);
 void				ft_lstdel(t_list **alst, void (*del)(void*, size_t));
 void				ft_lstdelone(t_list **alst, void (*del)(void*, size_t));
 void				ft_lstdelthis(t_list **alst, t_list *item);
