@@ -6,48 +6,46 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/16 14:00:12 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/21 05:09:24 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -- VARIABLES --
 
-NAME = libft.a
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra $(INCLUDES)
-AR = ar -rc
-LINK = ar -s
-NEW_DIR = mkdir -p
-DEL_DIR = rm -rf
-DEL_FILE = rm -f
+NAME =				libft.a
+CC =				gcc
+CFLAGS =			-Wall -Werror -Wextra
+CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
+					-I $(CHAR_DIR)/$(INC_DIR) \
+					-I $(STR_DIR)/$(INC_DIR) \
+					-I $(WSTR_DIR)/$(INC_DIR) \
+					-I $(MATH_DIR)/$(INC_DIR) \
+					-I $(FT_PRINTF_DIR)/$(INC_DIR) \
+					-I $(LIST_DIR)/$(INC_DIR) \
+					-I $(RW_DIR)/$(INC_DIR) \
 
-# -- COLORS --
+SHELL =				/bin/bash
+AR =				ar -rc
+LINK =				ar -s
+MKDIR =				mkdir -p
+RMDIR =				rm -rf
+RM =				rm -f
+NORM =				norminette
 
-YELLOW_BOLD = \e[31;33;1m
-GREEN = \e[32m
-GREEN_BOLD = \e[32;1m
-RED = \e[31m
-RED_BOLD = \e[31;1m
-WHITE_BOLD = \e[37;1m
-EOC = \e[0m
+# -- PATHS NAMES --
 
-# -- PATHS --
-
-SRC_DIR = sources
-INC_DIR = includes
-OBJ_DIR = .objects
-
-VPATH =		$(MEMORY_DIR):$(CHAR_DIR):$(STR_DIR):$(WSTR_DIR):$(MATH_DIR):$(FT_PRINTF_DIR):$(LIST_DIR):$(RW_DIR)
-INCLUDES =	$(MEMORY_INC) $(CHAR_INC) $(STR_INC) $(WSTR_INC) $(MATH_INC) $(FT_PRINTF_INC) $(LIST_INC) $(RW_INC)
-OBJECTS =	$(MEMORY_OBJ) $(CHAR_OBJ) $(STR_OBJ) $(WSTR_OBJ) $(MATH_OBJ) $(FT_PRINTF_OBJ) $(LIST_OBJ) $(RW_OBJ)
+SRC_DIR =			sources
+INC_DIR =			includes
+OBJ_DIR =			.objects
 
 # -- FILES --
 
-MEMORY_DIR = memory/$(SRC_DIR)
-MEMORY_INC = -I memory/$(INC_DIR)
-MEMORY_SRC = $(patsubst %,$(MEMORY_DIR)/%,$(MEMORY_FILES:=.c))
-MEMORY_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(MEMORY_FILES:=.o))
-MEMORY_FILES =		ft_memalloc \
+MEMORY_DIR =		memory
+MEMORY_SRC =		$(patsubst %,$(MEMORY_DIR)/$(SRC_DIR)/%,$(MEMORY_C_FILES:=.c))
+MEMORY_INC =		$(patsubst %,$(MEMORY_DIR)/$(INC_DIR)/%,$(MEMORY_H_FILES:=.h))
+MEMORY_H_FILES =	memory \
+
+MEMORY_C_FILES =	ft_memalloc \
 					ft_memdel \
 					ft_memset \
 					ft_revmemset \
@@ -63,11 +61,12 @@ MEMORY_FILES =		ft_memalloc \
 					ft_memcmp \
 					ft_revmemcmp \
 
-CHAR_DIR = characters/$(SRC_DIR)
-CHAR_INC = -I characters/$(INC_DIR)
-CHAR_SRC = $(patsubst %,$(CHAR_DIR)/%,$(CHAR_FILES:=.c))
-CHAR_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(CHAR_FILES:=.o))
-CHAR_FILES =		ft_isupper \
+CHAR_DIR =			characters
+CHAR_SRC =			$(patsubst %,$(CHAR_DIR)/$(SRC_DIR)/%,$(CHAR_C_FILES:=.c))
+CHAR_INC =			$(patsubst %,$(CHAR_DIR)/$(INC_DIR)/%,$(CHAR_H_FILES:=.h))
+CHAR_H_FILES =		characters \
+
+CHAR_C_FILES =		ft_isupper \
 					ft_islower \
 					ft_isalnum \
 					ft_isalpha \
@@ -79,11 +78,12 @@ CHAR_FILES =		ft_isupper \
 					ft_tolower \
 					ft_toupper \
 
-STR_DIR = strings/$(SRC_DIR)
-STR_INC = -I strings/$(INC_DIR)
-STR_SRC = $(patsubst %,$(STR_DIR)/%,$(STR_FILES:=.c))
-STR_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(STR_FILES:=.o))
-STR_FILES =			ft_strnew \
+STR_DIR =			strings
+STR_SRC =			$(patsubst %,$(STR_DIR)/$(SRC_DIR)/%,$(STR_C_FILES:=.c))
+STR_INC =			$(patsubst %,$(STR_DIR)/$(INC_DIR)/%,$(STR_H_FILES:=.h))
+STR_H_FILES =		strings \
+
+STR_C_FILES =		ft_strnew \
 					ft_strdel \
 					ft_strclr \
 					ft_strlen \
@@ -122,11 +122,12 @@ STR_FILES =			ft_strnew \
 					\
 					ft_nextws \
 
-WSTR_DIR = wide_strings/$(SRC_DIR)
-WSTR_INC = -I wide_strings/$(INC_DIR)
-WSTR_SRC = $(patsubst %,$(WSTR_DIR)/%,$(WSTR_FILES:=.c))
-WSTR_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(WSTR_FILES:=.o))
-WSTR_FILES = 		ft_wcharlen \
+WSTR_DIR =			wide_strings
+WSTR_SRC =			$(patsubst %,$(WSTR_DIR)/$(SRC_DIR)/%,$(WSTR_C_FILES:=.c))
+WSTR_INC =			$(patsubst %,$(WSTR_DIR)/$(INC_DIR)/%,$(WSTR_H_FILES:=.h))
+WSTR_H_FILES = 		wide_strings \
+
+WSTR_C_FILES = 		ft_wcharlen \
 					ft_wchar_to_str \
 					ft_wchar_to_astr \
 					\
@@ -139,11 +140,12 @@ WSTR_FILES = 		ft_wcharlen \
 					ft_wstr_to_str \
 					ft_wstr_to_astr \
 
-MATH_DIR = maths/$(SRC_DIR)
-MATH_INC = -I maths/$(INC_DIR)
-MATH_SRC = $(patsubst %,$(MATH_DIR)/%,$(MATH_FILES:=.c))
-MATH_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(MATH_FILES:=.o))
-MATH_FILES =		ft_atoi \
+MATH_DIR =			maths
+MATH_SRC =			$(patsubst %,$(MATH_DIR)/$(SRC_DIR)/%,$(MATH_C_FILES:=.c))
+MATH_INC =			$(patsubst %,$(MATH_DIR)/$(INC_DIR)/%,$(MATH_H_FILES:=.h))
+MATH_H_FILES =		maths \
+
+MATH_C_FILES =		ft_atoi \
 					ft_atoi_base \
 					ft_atol \
 					ft_atol_base \
@@ -166,11 +168,22 @@ MATH_FILES =		ft_atoi \
 					ft_factorl \
 					ft_abs \
 
-FT_PRINTF_DIR = ft_printf/$(SRC_DIR)
-FT_PRINTF_INC = -I ft_printf/$(INC_DIR)
-FT_PRINTF_SRC = $(patsubst %,$(FT_PRINTF_DIR)/%,$(FT_PRINTF_FILES:=.c))
-FT_PRINTF_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(FT_PRINTF_FILES:=.o))
-FT_PRINTF_FILES =	ft_printf \
+FT_PRINTF_DIR =		ft_printf
+FT_PRINTF_SRC =		$(patsubst %,$(FT_PRINTF_DIR)/$(SRC_DIR)/%,$(FT_PRINTF_C_FILES:=.c))
+FT_PRINTF_INC =		$(patsubst %,$(FT_PRINTF_DIR)/$(INC_DIR)/%,$(FT_PRINTF_H_FILES:=.h))
+FT_PRINTF_H_FILES =	char_utils \
+					colors_table \
+					float_utils \
+					ft_printf_structs \
+					ft_printf \
+					handle_functions \
+					handle_utils \
+					jump_table \
+					numbers_utils \
+					process_functions \
+					vararg_utils \
+
+FT_PRINTF_C_FILES =	ft_printf \
 					vararg_utils \
 					handle_utils \
 					numbers_utils \
@@ -197,11 +210,12 @@ FT_PRINTF_FILES =	ft_printf \
 					handle_float_auto \
 					handle_others \
 
-LIST_DIR = linked_lists/$(SRC_DIR)
-LIST_INC = -I linked_lists/$(INC_DIR)
-LIST_SRC = $(patsubst %,$(LIST_DIR)/%,$(LIST_FILES:=.c))
-LIST_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(LIST_FILES:=.o))
-LIST_FILES =		ft_lstnew \
+LIST_DIR =			linked_lists
+LIST_SRC =			$(patsubst %,$(LIST_DIR)/$(SRC_DIR)/%,$(LIST_C_FILES:=.c))
+LIST_INC =			$(patsubst %,$(LIST_DIR)/$(INC_DIR)/%,$(LIST_H_FILES:=.h))
+LIST_H_FILES =		linked_lists \
+
+LIST_C_FILES =		ft_lstnew \
 					ft_lstnew_nm \
 					ft_lstdel \
 					ft_lstdelone \
@@ -220,11 +234,13 @@ LIST_FILES =		ft_lstnew \
 					ft_lstlast \
 					ft_lstfind \
 
-RW_DIR = read_write/$(SRC_DIR)
-RW_INC = -I read_write/$(INC_DIR)
-RW_SRC = $(patsubst %,$(RW_DIR)/%,$(RW_FILES:=.c))
-RW_OBJ = $(patsubst %,$(OBJ_DIR)/%,$(RW_FILES:=.o))
-RW_FILES =		get_next_line \
+RW_DIR =			read_write
+RW_SRC =			$(patsubst %,$(RW_DIR)/$(SRC_DIR)/%,$(RW_C_FILES:=.c))
+RW_INC =			$(patsubst %,$(RW_DIR)/$(INC_DIR)/%,$(RW_H_FILES:=.h))
+RW_H_FILES =		read_write \
+					get_next_line \
+
+RW_C_FILES =		get_next_line \
 					\
 					ft_putchar \
 					ft_putchar_fd \
@@ -249,45 +265,82 @@ RW_FILES =		get_next_line \
 					ft_putnbr \
 					ft_putnbr_fd \
 
-# -- IMPLICIT RULES --
+VPATH =		$(MEMORY_DIR)/$(SRC_DIR):$(CHAR_DIR)/$(SRC_DIR):\
+			$(STR_DIR)/$(SRC_DIR):$(WSTR_DIR)/$(SRC_DIR):\
+			$(MATH_DIR)/$(SRC_DIR):$(FT_PRINTF_DIR)/$(SRC_DIR):\
+			$(LIST_DIR)/$(SRC_DIR):$(RW_DIR)/$(SRC_DIR)
 
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
-	printf "$(GREEN).$(EOC)"
+SOURCES =	$(MEMORY_SRC) $(CHAR_SRC) $(STR_SRC) $(WSTR_SRC) \
+			$(MATH_SRC) $(FT_PRINTF_SRC) $(LIST_SRC) $(RW_SRC) \
+
+INCLUDES =	$(MEMORY_INC) $(CHAR_INC) $(STR_INC) $(WSTR_INC) \
+			$(MATH_INC) $(FT_PRINTF_INC) $(LIST_INC) $(RW_INC) \
+
+OBJECTS =	$(patsubst %,$(OBJ_DIR)/%,$(notdir $(SOURCES:.c=.o)))
+
+# -- IMPLICIT RULES  / LINKING --
+
+$(OBJ_DIR)/%.o: %.c $(INCLUDES)
+	@$(eval DONE=$(shell echo $$(($(INDEX)*20/$(NB)))))
+	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
+	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
+	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46); index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
+	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Creating library...  %2d%% $(CNO)[`printf '*%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
+	@$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
+	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
 # -- RULES --
 
-all: prep $(NAME)
+all: $(NAME)
 
-$(NAME):
-	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(GREEN)Creating objects$(EOC) "
-	make obj
-	printf "\n"
-	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(GREEN)Creating Library$(EOC) "
-	$(AR) $(NAME) $(OBJECTS)
-	$(LINK) $(NAME)
-	printf "\t$(WHITE_BOLD)[$(GREEN_BOLD)DONE$(WHITE_BOLD)]$(EOC)\n"
+$(NAME): $(OBJ_DIR) $(OBJECTS) Makefile
+	@$(AR) $(NAME) $(OBJECTS)
+	@$(LINK) $(NAME)
+	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Library created !\t$(GREEN_B)✓$(EOC)\n"
 
-obj: $(OBJECTS)
-	echo >> /dev/null
+$(OBJ_DIR):
+	@$(MKDIR) $(OBJ_DIR)
 
 clean:
-	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(RED)Deleting objects$(EOC) "
-	$(DEL_DIR) $(OBJ_DIR)
-	printf "\t$(WHITE_BOLD)[$(RED_BOLD)X$(WHITE_BOLD)]$(EOC)\n"
+	@if [ -e $(OBJ_DIR) ]; \
+	then \
+		$(RMDIR) $(OBJ_DIR); \
+		printf "> $(YELLOW)$(NAME)$(EOC) : Objects deleted\t$(RED_B)✗$(EOC)\n"; \
+	fi;
 
 fclean: clean
-	printf "> $(YELLOW_BOLD)$(NAME)$(EOC) : $(RED)Deleting binary$(EOC) "
-	$(DEL_FILE) $(NAME)
-	printf "\t$(WHITE_BOLD)[$(RED_BOLD)X$(WHITE_BOLD)]$(EOC)\n"
+	@if [ -e $(NAME) ]; \
+	then \
+		$(RM) $(NAME); \
+		printf "> $(YELLOW)$(NAME)$(EOC) : Library deleted\t$(RED_B)✗$(EOC)\n"; \
+	fi;
 
 re: fclean all
 
 lib: all clean
 
-prep:
-	$(NEW_DIR) $(OBJ_DIR)
+norm:
+	@$(NORM) $(SRC_DIR)
+	@$(NORM) $(INC_DIR)
 
-.PHONY: all obj clean fclean re lib prep
+.PHONY: all clean fclean re norm
 
-.SILENT: all obj clean fclean re lib prep $(NAME) $(OBJECTS)
+# -- DISPLAY --
+
+LEN_NAME =	`printf "%s" $(NAME) |wc -c`
+DELTA =		$$(echo "$$(tput cols)-52-$(LEN_NAME)"|bc)
+NB =		$(words $(SOURCES))
+INDEX=		0
+
+ERASELN =	\033[K
+CNO =		\033[38;5;%dm
+
+YELLOW =	\e[31;33m
+YELLOW_B =	\e[31;33;1m
+GREEN =		\e[32m
+GREEN_B =	\e[32;1m
+RED =		\e[31m
+RED_B =		\e[31;1m
+WHITE =		\e[37m
+WHITE_B =	\e[37;1m
+EOC =		\e[0m
