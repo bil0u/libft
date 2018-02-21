@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/21 05:09:24 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/21 05:20:24 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -316,8 +316,6 @@ fclean: clean
 	fi;
 
 re: fclean all
-
-lib: all clean
 
 norm:
 	@$(NORM) $(SRC_DIR)
