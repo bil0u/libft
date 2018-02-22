@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/22 12:00:36 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/22 12:19:33 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,8 @@ OBJ_DIR =			.objects
 # -- FILES --
 
 MEMORY_DIR =		memory
-MEMORY_SRC =		$(patsubst %,$(MEMORY_DIR)/$(SRC_DIR)/%,$(MEMORY_C_FILES:=.c))
-MEMORY_C_FILES =	ft_memalloc \
+MEMORY_SRC =		$(patsubst %,$(MEMORY_DIR)/$(SRC_DIR)/%,$(MEMORY_FILES:=.c))
+MEMORY_FILES =		ft_memalloc \
 					ft_memdel \
 					ft_memset \
 					ft_revmemset \
@@ -60,8 +60,8 @@ MEMORY_C_FILES =	ft_memalloc \
 					ft_revmemcmp \
 
 CHAR_DIR =			characters
-CHAR_SRC =			$(patsubst %,$(CHAR_DIR)/$(SRC_DIR)/%,$(CHAR_C_FILES:=.c))
-CHAR_C_FILES =		ft_isupper \
+CHAR_SRC =			$(patsubst %,$(CHAR_DIR)/$(SRC_DIR)/%,$(CHAR_FILES:=.c))
+CHAR_FILES =		ft_isupper \
 					ft_islower \
 					ft_isalnum \
 					ft_isalpha \
@@ -74,8 +74,8 @@ CHAR_C_FILES =		ft_isupper \
 					ft_toupper \
 
 STR_DIR =			strings
-STR_SRC =			$(patsubst %,$(STR_DIR)/$(SRC_DIR)/%,$(STR_C_FILES:=.c))
-STR_C_FILES =		ft_strnew \
+STR_SRC =			$(patsubst %,$(STR_DIR)/$(SRC_DIR)/%,$(STR_FILES:=.c))
+STR_FILES =		ft_strnew \
 					ft_strdel \
 					ft_strclr \
 					ft_strlen \
@@ -115,8 +115,8 @@ STR_C_FILES =		ft_strnew \
 					ft_nextws \
 
 WSTR_DIR =			wide_strings
-WSTR_SRC =			$(patsubst %,$(WSTR_DIR)/$(SRC_DIR)/%,$(WSTR_C_FILES:=.c))
-WSTR_C_FILES = 		ft_wcharlen \
+WSTR_SRC =			$(patsubst %,$(WSTR_DIR)/$(SRC_DIR)/%,$(WSTR_FILES:=.c))
+WSTR_FILES = 		ft_wcharlen \
 					ft_wchar_to_str \
 					ft_wchar_to_astr \
 					\
@@ -130,8 +130,8 @@ WSTR_C_FILES = 		ft_wcharlen \
 					ft_wstr_to_astr \
 
 MATH_DIR =			maths
-MATH_SRC =			$(patsubst %,$(MATH_DIR)/$(SRC_DIR)/%,$(MATH_C_FILES:=.c))
-MATH_C_FILES =		ft_atoi \
+MATH_SRC =			$(patsubst %,$(MATH_DIR)/$(SRC_DIR)/%,$(MATH_FILES:=.c))
+MATH_FILES =		ft_atoi \
 					ft_atoi_base \
 					ft_atol \
 					ft_atol_base \
@@ -155,8 +155,8 @@ MATH_C_FILES =		ft_atoi \
 					ft_abs \
 
 FT_PRINTF_DIR =		ft_printf
-FT_PRINTF_SRC =		$(patsubst %,$(FT_PRINTF_DIR)/$(SRC_DIR)/%,$(FT_PRINTF_C_FILES:=.c))
-FT_PRINTF_C_FILES =	ft_printf \
+FT_PRINTF_SRC =		$(patsubst %,$(FT_PRINTF_DIR)/$(SRC_DIR)/%,$(FT_PRINTF_FILES:=.c))
+FT_PRINTF_FILES =	ft_printf \
 					vararg_utils \
 					handle_utils \
 					numbers_utils \
@@ -184,8 +184,8 @@ FT_PRINTF_C_FILES =	ft_printf \
 					handle_others \
 
 LIST_DIR =			linked_lists
-LIST_SRC =			$(patsubst %,$(LIST_DIR)/$(SRC_DIR)/%,$(LIST_C_FILES:=.c))
-LIST_C_FILES =		ft_lstnew \
+LIST_SRC =			$(patsubst %,$(LIST_DIR)/$(SRC_DIR)/%,$(LIST_FILES:=.c))
+LIST_FILES =		ft_lstnew \
 					ft_lstnew_nm \
 					ft_lstdel \
 					ft_lstdelone \
@@ -205,8 +205,8 @@ LIST_C_FILES =		ft_lstnew \
 					ft_lstfind \
 
 RW_DIR =			read_write
-RW_SRC =			$(patsubst %,$(RW_DIR)/$(SRC_DIR)/%,$(RW_C_FILES:=.c))
-RW_C_FILES =		get_next_line \
+RW_SRC =			$(patsubst %,$(RW_DIR)/$(SRC_DIR)/%,$(RW_FILES:=.c))
+RW_FILES =		get_next_line \
 					\
 					ft_putchar \
 					ft_putchar_fd \
@@ -279,14 +279,15 @@ fclean: clean
 		printf "> $(YELLOW)$(NAME)$(EOC) : Library deleted\t$(RED_B)✗$(EOC)\n"; \
 	fi;
 
-re: fclean all
+re: fclean
+	@$(MAKE)
 
 norm:
 	@$(NORM)
 
 .PHONY: all clean fclean re norm
 
-include $(OBJECTS:.o=.d)
+-include $(OBJECTS:.o=.d)
 
 # -- DISPLAY --
 
