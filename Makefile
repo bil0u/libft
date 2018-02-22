@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/22 12:19:33 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/22 14:05:42 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,19 +15,10 @@
 NAME =				libft.a
 CC =				gcc
 CFLAGS =			-Wall -Werror -Wextra
-CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
-					-I $(CHAR_DIR)/$(INC_DIR) \
-					-I $(STR_DIR)/$(INC_DIR) \
-					-I $(WSTR_DIR)/$(INC_DIR) \
-					-I $(MATH_DIR)/$(INC_DIR) \
-					-I $(FT_PRINTF_DIR)/$(INC_DIR) \
-					-I $(LIST_DIR)/$(INC_DIR) \
-					-I $(RW_DIR)/$(INC_DIR)
 DEPFLAGS =			-MMD
 
 SHELL =				/bin/bash
-AR =				ar -rc
-LINK =				ar -s
+AR =				ar -rcs
 MKDIR =				mkdir -p
 RMDIR =				rm -rf
 RM =				rm -f
@@ -75,7 +66,7 @@ CHAR_FILES =		ft_isupper \
 
 STR_DIR =			strings
 STR_SRC =			$(patsubst %,$(STR_DIR)/$(SRC_DIR)/%,$(STR_FILES:=.c))
-STR_FILES =		ft_strnew \
+STR_FILES =			ft_strnew \
 					ft_strdel \
 					ft_strclr \
 					ft_strlen \
@@ -206,7 +197,7 @@ LIST_FILES =		ft_lstnew \
 
 RW_DIR =			read_write
 RW_SRC =			$(patsubst %,$(RW_DIR)/$(SRC_DIR)/%,$(RW_FILES:=.c))
-RW_FILES =		get_next_line \
+RW_FILES =			get_next_line \
 					\
 					ft_putchar \
 					ft_putchar_fd \
@@ -239,6 +230,15 @@ VPATH =		$(MEMORY_DIR)/$(SRC_DIR):$(CHAR_DIR)/$(SRC_DIR):\
 SOURCES =	$(MEMORY_SRC) $(CHAR_SRC) $(STR_SRC) $(WSTR_SRC) \
 			$(MATH_SRC) $(FT_PRINTF_SRC) $(LIST_SRC) $(RW_SRC) \
 
+CPPFLAGS =	-I $(MEMORY_DIR)/$(INC_DIR) \
+			-I $(CHAR_DIR)/$(INC_DIR) \
+			-I $(STR_DIR)/$(INC_DIR) \
+			-I $(WSTR_DIR)/$(INC_DIR) \
+			-I $(MATH_DIR)/$(INC_DIR) \
+			-I $(FT_PRINTF_DIR)/$(INC_DIR) \
+			-I $(LIST_DIR)/$(INC_DIR) \
+			-I $(RW_DIR)/$(INC_DIR)
+
 OBJECTS =	$(patsubst %,$(OBJ_DIR)/%,$(notdir $(SOURCES:.c=.o)))
 
 # -- IMPLICIT RULES  / LINKING --
@@ -259,7 +259,6 @@ all:
 
 $(NAME): $(OBJ_DIR) $(OBJECTS)
 	@$(AR) $(NAME) $(OBJECTS)
-	@$(LINK) $(NAME)
 	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Library created !\t$(GREEN_B)✓$(EOC)\n"
 
 $(OBJ_DIR):
