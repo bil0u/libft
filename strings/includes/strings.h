@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/15 12:17:05 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/26 14:19:52 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strstr(const char *haystack, const char *needle);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strchr(const char *s, int c);
+char	*ft_strnchr(const char *s, int c, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtoupper(char *str);
 

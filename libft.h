@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:44:25 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/22 11:55:51 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/26 15:13:47 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # define BSET(x, bit) ((x) |= (bit))
 # define BUNSET(x, bit) ((x) &= ~(bit))
+# define BCOPY(x, y, bit) ((y) = ((y) & ~(bit)) | ((x) & (bit)))
 # define BIS_SET(x, bit) (((x) & (bit)) != 0)
 
 # include "./characters/includes/characters.h"
