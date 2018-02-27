@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/26 14:21:41 by upopee           ###   ########.fr        #
+#    Updated: 2018/02/26 23:02:52 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,9 +127,10 @@ MATH_FILES =		ft_atoi \
 					ft_atoi_base \
 					ft_atol \
 					ft_atol_base \
-					ft_itoa \
 					ft_atoimax \
 					ft_atoimax_base \
+					\
+					ft_atoi_chr \
 					\
 					ft_itoa \
 					ft_itoa_base \
@@ -137,6 +138,7 @@ MATH_FILES =		ft_atoi \
 					ft_ltoa_base \
 					ft_imaxtoa \
 					ft_imaxtoa_base \
+					\
 					ft_nbrlen_base \
 					ft_sqrt \
 					ft_sqrt_next \
@@ -199,6 +201,7 @@ LIST_FILES =		ft_lstnew \
 RW_DIR =			read_write
 RW_SRC =			$(patsubst %,$(RW_DIR)/$(SRC_DIR)/%,$(RW_FILES:=.c))
 RW_FILES =			get_next_line \
+					gnl_end \
 					\
 					ft_putchar \
 					ft_putchar_fd \
