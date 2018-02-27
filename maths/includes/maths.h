@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/22 11:50:28 by upopee           ###   ########.fr       */
+/*   Updated: 2018/02/26 22:34:28 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ long int		ft_atol(const char *str);
 long int		ft_atol_base(const char *str, const char *base);
 intmax_t		ft_atoimax(const char *str);
 intmax_t		ft_atoimax_base(const char *str, const char *base);
+
+int				ft_atoi_chr(char **str);
 
 char			*ft_itoa(int n);
 char			*ft_itoa_base(int n, const char *base);
