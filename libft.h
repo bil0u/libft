@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:44:25 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/26 15:13:47 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/02 04:05:42 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # define BUNSET(x, bit) ((x) &= ~(bit))
 # define BCOPY(x, y, bit) ((y) = ((y) & ~(bit)) | ((x) & (bit)))
 # define BIS_SET(x, bit) (((x) & (bit)) != 0)
+
+# define SWAP_UINT16(x) (((x) >> 8) | ((x) << 8))
+# define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | \
+ 						(((x) & 0x0000FF00) << 8) | ((x) << 24))
 
 # include "./characters/includes/characters.h"
 # include "./ft_printf/includes/ft_printf.h"
