@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstfind.c                                       :+:      :+:    :+:   */
+/*   get_winenv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/22 07:39:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/05 22:57:53 by upopee           ###   ########.fr       */
+/*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
+/*   Updated: 2018/03/05 22:34:16 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "linked_lists.h"
+#include "debug.h"
 
-t_list	*ft_lstfind(t_list *lst, void *ref, int (*cmp)())
+t_winenv	*get_winenv(void)
 {
-	while (lst)
-	{
-		if ((*cmp)(lst->content, ref) == 0)
-			return (lst);
-		lst = lst->next;
-	}
-	return (NULL);
+	static t_winenv	env = {0, 0};
+
+	return (&env);
 }

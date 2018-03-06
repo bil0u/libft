@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 16:06:01 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/15 18:03:26 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/05 21:56:39 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int				get_next_line(const int fd, char **line)
 	if (ret < 1)
 	{
 		ft_strdel(line);
-		ft_lstdelthis(&list, file);
+		ft_lstdelthis(&list, file, &ft_delcontent);
 	}
 	return (ret);
 }

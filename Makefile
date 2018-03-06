@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/02/26 23:02:52 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/06 00:58:27 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -184,6 +184,7 @@ LIST_FILES =		ft_lstnew \
 					ft_lstdel \
 					ft_lstdelone \
 					ft_lstdelthis \
+					ft_lstdelif \
 					ft_delcontent \
 					\
 					ft_lstadd \
@@ -226,13 +227,20 @@ RW_FILES =			get_next_line \
 					ft_putnbr \
 					ft_putnbr_fd \
 
+DEBUG_DIR =			debug
+DEBUG_SRC =			$(patsubst %,$(DEBUG_DIR)/$(SRC_DIR)/%,$(DEBUG_FILES:=.c))
+DEBUG_FILES =		get_winenv \
+					client_actions \
+
 VPATH =		$(MEMORY_DIR)/$(SRC_DIR):$(CHAR_DIR)/$(SRC_DIR):\
 			$(STR_DIR)/$(SRC_DIR):$(WSTR_DIR)/$(SRC_DIR):\
 			$(MATH_DIR)/$(SRC_DIR):$(FT_PRINTF_DIR)/$(SRC_DIR):\
-			$(LIST_DIR)/$(SRC_DIR):$(RW_DIR)/$(SRC_DIR)
+			$(LIST_DIR)/$(SRC_DIR):$(RW_DIR)/$(SRC_DIR):\
+			$(DEBUG_DIR)/$(SRC_DIR)\
 
 SOURCES =	$(MEMORY_SRC) $(CHAR_SRC) $(STR_SRC) $(WSTR_SRC) \
 			$(MATH_SRC) $(FT_PRINTF_SRC) $(LIST_SRC) $(RW_SRC) \
+			$(DEBUG_SRC) \
 
 CPPFLAGS =	-I $(MEMORY_DIR)/$(INC_DIR) \
 			-I $(CHAR_DIR)/$(INC_DIR) \
@@ -241,7 +249,8 @@ CPPFLAGS =	-I $(MEMORY_DIR)/$(INC_DIR) \
 			-I $(MATH_DIR)/$(INC_DIR) \
 			-I $(FT_PRINTF_DIR)/$(INC_DIR) \
 			-I $(LIST_DIR)/$(INC_DIR) \
-			-I $(RW_DIR)/$(INC_DIR)
+			-I $(RW_DIR)/$(INC_DIR) \
+			-I $(DEBUG_DIR)/$(INC_DIR) \
 
 OBJECTS =	$(patsubst %,$(OBJ_DIR)/%,$(notdir $(SOURCES:.c=.o)))
 
@@ -260,6 +269,7 @@ $(OBJ_DIR)/%.o: %.c Makefile
 
 all:
 	@$(MAKE) -j $(NAME)
+	gcc test.c $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJECTS)
 	@$(AR) $(NAME) $(OBJECTS)
