@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/06 00:58:27 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/06 18:49:06 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -269,7 +269,9 @@ $(OBJ_DIR)/%.o: %.c Makefile
 
 all:
 	@$(MAKE) -j $(NAME)
-	gcc test.c $(NAME)
+	gcc -o client client.c $(NAME)
+	gcc -o server server.c $(NAME)
+	gcc -o test test.c $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJECTS)
 	@$(AR) $(NAME) $(OBJECTS)

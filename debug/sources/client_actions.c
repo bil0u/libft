@@ -6,47 +6,60 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:40:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/05 23:08:29 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/06 19:28:44 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "debug.h"
 #include "strings.h"
 #include "memory.h"
 #include "ft_printf.h"
 
-int			open_window(char *name, uint8_t flags)
+static void	clean_fd(int fd, char *fifo)
 {
-	uint8_t		len;
+	if (fd != -1)
+	{
+		if (close(fd) == -1)
+			ft_dprintf(2, ERR_CLOSE, fifo, fd);
+		else
+			ft_printf(SERV_GOODBYE1);
+	}
+	if (fifo)
+	{
+		unlink(fifo);
+		remove(fifo);
+	}
+}
+
+int			open_window(char *fifo)
+{
 	t_winenv	*env;
 	t_win		new_window;
 
 	ft_bzero(&new_window, sizeof(new_window));
-	if (!name || (len = ft_strlen(name)) >= WINDOW_NAME_MAX_SIZE || len == 0)
+	if (!fifo || ft_strlen(fifo) == 0)
 	{
-		if (flags & VERBOSE)
-			ft_dprintf(2, len ? ERR_NAME : ERR_NO_NAME, WINDOW_NAME_MAX_SIZE);
+		ft_dprintf(2, ERR_NAME);
 		return (-1);
 	}
-	env = get_winenv();
-	if (mkfifo(name, 0666) == -1 && flags & VERBOSE)
-		ft_dprintf(2, ERR_MKFIFO, name);
-	else if ((new_window.fd = open(name, O_RDONLY)) == -1 && flags & VERBOSE)
-		ft_dprintf(2, ERR_OPEN, name);
-	else
+	if (mkfifo(fifo, 0666) == -1
+		|| (new_window.fd = open(fifo, O_RDONLY|O_NONBLOCK)) == -1)
 	{
-		ft_strncpy(new_window.name, name, len);
-		new_window.flags = flags;
-		ft_lstadd(&(env->windows), ft_lstnew(&new_window, sizeof(new_window)));
-		if (flags & VERBOSE)
-			ft_dprintf(1, OPEN_MSG, name, new_window.fd);
+		ft_dprintf(2, SERV_OPEN_ERR, fifo);
+		clean_fd(new_window.fd, fifo);
+		return (-1);
 	}
+	new_window.fifo = ft_strdup(fifo);
+	env = get_winenv();
+	ft_lstadd(&(env->windows), ft_lstnew(&new_window, sizeof(new_window)));
+	ft_printf(CLIENT_OPEN_SUCCESS, new_window.fifo, new_window.fd);
 	return (new_window.fd);
 }
 
 int			item_fd_cmp(t_win *item, void *fd_ref)
 {
-	return (item->fd == *((int *)fd_ref));
+	return ((item->fd == *((int *)fd_ref)) == 0);
 }
 
 void		terminate_session(void *win_data, size_t size)
@@ -55,10 +68,8 @@ void		terminate_session(void *win_data, size_t size)
 
 	(void)size;
 	to_close = (t_win *)win_data;
-	if (close(to_close->fd) == -1 && to_close->flags & VERBOSE)
-		ft_dprintf(2, ERR_CLOSE, to_close->name, to_close->fd);
-	else if (to_close->flags & VERBOSE)
-		ft_dprintf(1, CLOSE_MSG, to_close->name, to_close->fd);
+	clean_fd(to_close->fd, to_close->fifo);
+	ft_strdel(&to_close->fifo);
 	ft_memdel((void **)&to_close);
 }
 
@@ -83,10 +94,9 @@ int			close_window(int fd)
 void		close_allwindows(void)
 {
 	t_winenv	*env;
-	t_list		*curr;
 
 	env = get_winenv();
-	(void)curr;
+	ft_lstdel(&env->windows, &terminate_session);
 }
 
 int			print_to_window(int fd, char *msg)
