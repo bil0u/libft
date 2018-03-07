@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/06 18:49:06 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/07 05:08:00 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,15 @@
 NAME =				libft.a
 CC =				gcc
 CFLAGS =			-Wall -Werror -Wextra
+CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
+					-I $(CHAR_DIR)/$(INC_DIR) \
+					-I $(STR_DIR)/$(INC_DIR) \
+					-I $(WSTR_DIR)/$(INC_DIR) \
+					-I $(MATH_DIR)/$(INC_DIR) \
+					-I $(FT_PRINTF_DIR)/$(INC_DIR) \
+					-I $(LIST_DIR)/$(INC_DIR) \
+					-I $(RW_DIR)/$(INC_DIR) \
+					-I $(LOG_DIR)/$(INC_DIR)
 DEPFLAGS =			-MMD
 
 SHELL =				/bin/bash
@@ -23,6 +32,22 @@ MKDIR =				mkdir -p
 RMDIR =				rm -rf
 RM =				rm -f
 NORM =				norminette
+
+VPATH =				$(MEMORY_DIR)/$(SRC_DIR):$(CHAR_DIR)/$(SRC_DIR):\
+					$(STR_DIR)/$(SRC_DIR):$(WSTR_DIR)/$(SRC_DIR):\
+					$(MATH_DIR)/$(SRC_DIR):$(FT_PRINTF_DIR)/$(SRC_DIR):\
+					$(LIST_DIR)/$(SRC_DIR):$(RW_DIR)/$(SRC_DIR):\
+					$(LOG_DIR)/$(SRC_DIR)\
+
+SOURCES =			$(MEMORY_SRC) $(CHAR_SRC) $(STR_SRC) $(WSTR_SRC) \
+					$(MATH_SRC) $(FT_PRINTF_SRC) $(LIST_SRC) $(RW_SRC) \
+					$(LOG_SRC) \
+
+LIBFT_OBJS =		$(patsubst %,$(OBJ_DIR)/%,$(notdir $(SOURCES:.c=.o)))
+LOGSERV_OBJS =		$(patsubst %,$(OBJ_DIR)/%,$(notdir $(LOGSERV_SRC:.c=.o)))
+LOGCLT_OBJS =		$(patsubst %,$(OBJ_DIR)/%,$(notdir $(LOGCLT_SRC:.c=.o)))
+
+ALL_OBJS =			$(LIBFT_OBJS) $(LOGSERV_OBJS) $(LOGCLT_OBJS)
 
 # -- PATHS NAMES --
 
@@ -227,32 +252,15 @@ RW_FILES =			get_next_line \
 					ft_putnbr \
 					ft_putnbr_fd \
 
-DEBUG_DIR =			debug
-DEBUG_SRC =			$(patsubst %,$(DEBUG_DIR)/$(SRC_DIR)/%,$(DEBUG_FILES:=.c))
-DEBUG_FILES =		get_winenv \
-					client_actions \
+LOG_DIR =			log
+LOGSERV_SRC =		$(patsubst %,$(LOG_DIR)/$(SRC_DIR)/%,$(LOG_SERVER:=.c))
+LOGCLT_SRC =		$(patsubst %,$(LOG_DIR)/$(SRC_DIR)/%,$(LOG_CLIENT:=.c))
+LOG_SRC =			$(patsubst %,$(LOG_DIR)/$(SRC_DIR)/%,$(LOG_FILES:=.c))
+LOG_SERVER =		log_server
+LOG_CLIENT =		log_client
+LOG_FILES =			log_management \
+					log_tools \
 
-VPATH =		$(MEMORY_DIR)/$(SRC_DIR):$(CHAR_DIR)/$(SRC_DIR):\
-			$(STR_DIR)/$(SRC_DIR):$(WSTR_DIR)/$(SRC_DIR):\
-			$(MATH_DIR)/$(SRC_DIR):$(FT_PRINTF_DIR)/$(SRC_DIR):\
-			$(LIST_DIR)/$(SRC_DIR):$(RW_DIR)/$(SRC_DIR):\
-			$(DEBUG_DIR)/$(SRC_DIR)\
-
-SOURCES =	$(MEMORY_SRC) $(CHAR_SRC) $(STR_SRC) $(WSTR_SRC) \
-			$(MATH_SRC) $(FT_PRINTF_SRC) $(LIST_SRC) $(RW_SRC) \
-			$(DEBUG_SRC) \
-
-CPPFLAGS =	-I $(MEMORY_DIR)/$(INC_DIR) \
-			-I $(CHAR_DIR)/$(INC_DIR) \
-			-I $(STR_DIR)/$(INC_DIR) \
-			-I $(WSTR_DIR)/$(INC_DIR) \
-			-I $(MATH_DIR)/$(INC_DIR) \
-			-I $(FT_PRINTF_DIR)/$(INC_DIR) \
-			-I $(LIST_DIR)/$(INC_DIR) \
-			-I $(RW_DIR)/$(INC_DIR) \
-			-I $(DEBUG_DIR)/$(INC_DIR) \
-
-OBJECTS =	$(patsubst %,$(OBJ_DIR)/%,$(notdir $(SOURCES:.c=.o)))
 
 # -- IMPLICIT RULES  / LINKING --
 
@@ -261,7 +269,7 @@ $(OBJ_DIR)/%.o: %.c Makefile
 	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
 	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46); index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
-	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Creating library...  %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
+	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Building library...  %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s%s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
 	@$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
@@ -269,13 +277,20 @@ $(OBJ_DIR)/%.o: %.c Makefile
 
 all:
 	@$(MAKE) -j $(NAME)
-	gcc -o client client.c $(NAME)
-	gcc -o server server.c $(NAME)
-	gcc -o test test.c $(NAME)
+	@$(MAKE) -j $(LOG_SERVER)
+	@$(MAKE) -j $(LOG_CLIENT)
 
-$(NAME): $(OBJ_DIR) $(OBJECTS)
-	@$(AR) $(NAME) $(OBJECTS)
-	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Library created !\t$(GREEN_B)✓$(EOC)\n"
+$(NAME): $(OBJ_DIR) $(LIBFT_OBJS)
+	@$(AR) $(NAME) $(LIBFT_OBJS)
+	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Library created\t$(GREEN_B)✓$(EOC)\n"
+
+$(LOG_SERVER): $(OBJ_DIR) $(LIBFT_OBJS) $(LOGSERV_OBJS)
+	@$(CC) -o $@ $(LOGSERV_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
+	@printf "\r$(ERASELN)> $(YELLOW)$(LOG_SERVER)$(EOC) : Binary created\t$(GREEN_B)✓$(EOC)\n"
+
+$(LOG_CLIENT): $(OBJ_DIR) $(LIBFT_OBJS) $(LOGCLT_OBJS)
+	@$(CC) -o $@ $(LOGCLT_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
+	@printf "\r$(ERASELN)> $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary created\t$(GREEN_B)✓$(EOC)\n"
 
 $(OBJ_DIR):
 	@$(MKDIR) $(OBJ_DIR)
@@ -293,6 +308,11 @@ fclean: clean
 		$(RM) $(NAME); \
 		printf "> $(YELLOW)$(NAME)$(EOC) : Library deleted\t$(RED_B)✗$(EOC)\n"; \
 	fi;
+	@if [ -e $(LOG_SERVER) ]; \
+	then \
+		$(RM) $(LOG_SERVER); \
+		printf "> $(YELLOW)$(LOG_SERVER)$(EOC) : Binary deleted\t$(RED_B)✗$(EOC)\n"; \
+	fi
 
 re: fclean
 	@$(MAKE)
@@ -302,9 +322,11 @@ norm:
 
 .PHONY: all clean fclean re norm
 
--include $(OBJECTS:.o=.d)
+-include $(ALL_OBJS:.o=.d)
 
-# -- DISPLAY --
+# ------------------------------------------------------------------------------
+# --------------------------- DISPLAY ------------------------------------------
+# ------------------------------------------------------------------------------
 
 LEN_NAME =	`printf "%s" $(NAME) |wc -c`
 DELTA =		$$(echo "$$(tput cols)-52-$(LEN_NAME)"|bc)

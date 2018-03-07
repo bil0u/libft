@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:44:25 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/05 20:55:05 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/07 00:46:55 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@
 # include "./read_write/includes/read_write.h"
 # include "./strings/includes/strings.h"
 # include "./wide_strings/includes/wide_strings.h"
-# include "./debug/includes/debug.h"
+# include "./log/includes/log.h"
 
 #endif
