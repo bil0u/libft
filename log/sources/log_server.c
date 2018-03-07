@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 04:50:55 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/07 10:45:22 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 {
 	int		i;
 
+	i = -1;
+	while (++i < argc)
+		ft_printf("argv[%d] = '{cyan}%s{eoc}'\n", i, argv[i]);
 	*fifo = argv[1];
 	while (--argc > 1)
 	{
