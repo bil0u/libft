@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 09:03:42 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/07 18:16:36 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			close_pipe(int fd, char *fifo, int s_flags)
 	if (fd != -1)
 	{
 		ret += close(fd);
-		if (s_flags & LOG_VERBOSE)
+		if (s_flags & LOG_F_VERBOSE)
 		{
 			if (ret)
 				ft_dprintf(2, LOG_ERR_CLOSE, fifo, fd);		// ERROR Closing
@@ -76,6 +76,6 @@ void		terminate_session(void *win_data, size_t size)
 	to_close = (t_logwin *)win_data;
 	if (close_pipe(to_close->fd, to_close->fifo, to_close->flags) > 0)
 		ft_dprintf(2, LOG_ERR_CLOSE, to_close->fifo, to_close->fd);
-	ft_strdel(&to_close->fifo);
+	ft_strdel((char **)&to_close->fifo);
 	ft_memdel((void **)&to_close);
 }

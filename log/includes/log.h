@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 09:51:57 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/07 19:06:37 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,33 +16,33 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <inttypes.h>
+# include <sys/param.h>
 # include "../../linked_lists/includes/linked_lists.h"
 
 # define LOG_BUFF_SIZE		4096
-# define LOG_FORK_NBARGS	7
+# define LOG_ARGS_MAXSIZE	256
+# define LOG_EXEC_MAXARGS	6
 # define LOG_EXEC_BSIZE		32
 
-# define LOG_NONE			(0)
-# define LOG_PRINT_NEWLINE	(1)
-# define LOG_VERBOSE		(1 << 1)
+# define LOG_NB_FLAGS		2
+# define LOG_F_NONE			(0)
+# define LOG_F_NONEWLINE	(1)
+# define LOG_F_VERBOSE		(1 << 1)
 
-typedef struct	s_logfork
+
+typedef struct	s_execve
 {
-	pid_t		pid;
-//	char		term_name[LOG_EXEC_BSIZE];
-//	char		term_arg1[LOG_EXEC_BSIZE];
-//	char		term_arg2[LOG_EXEC_BSIZE];
-	char		serv_name[LOG_EXEC_BSIZE];
-	char		serv_args[LOG_EXEC_BSIZE];
-	char		*exec_args[LOG_FORK_NBARGS];
-}				t_logfork;
+	pid_t		fork_pid;
+	char		args[LOG_EXEC_MAXARGS][LOG_ARGS_MAXSIZE];
+}				t_execve;
+
 
 typedef struct	s_logwin
 {
+	pid_t		pid;
 	int			fd;
-	char		*fifo;
 	int			flags;
-	t_logfork	process;
+	char		fifo[LOG_ARGS_MAXSIZE];
 }				t_logwin;
 
 typedef struct	s_logenv
@@ -55,7 +55,7 @@ typedef struct	s_logenv
 ** -- CLIENT SIDE FUNCTIONS --
 */
 
-int			logwindow_new(int flags);
+int			init_logwindow(int flags);
 int			print_to_window(int fd, char *msg);
 int			close_window(int fd);
 void		close_allwindows(void);
@@ -75,13 +75,16 @@ void		terminate_session(void *win_data, size_t size);
 ** -- SERVER STYLE --
 */
 
+# define SCRIPT_RPATH		"libft/log/scripts/launch_server.sh"
+
 # define SERV_FILE_TEMPLATE "/tmp/libft.log.XXX"
 
 # define SERV_PROMPT		"{yellow} >{eoc} "
 
-# define SERV_WELCOME1		"{yellow}[Welcome to the debug server]{eoc}\t"
-# define SERV_WELCOME2		"--> Channel: {cyan}%s{eoc} (fd {yellow}%d{eoc})\n"
-# define SERV_GOODBYE1		"{red}\n[Connection with {cyan}%s{red} closed]{eoc}\n"
+# define SERV_WELCOME1		"{yellow}[ Awesome logging tool v0.1 by {cyan}upopee{yellow} ]{eoc}\n"
+# define SERV_WELCOME2		"{green}[ Listening on {eoc}-->{green} '{cyan}%s{green}' ]{eoc}\n"
+# define SERV_GOODBYE1		"\n{red}[ Closing connection with '{cyan}%s{red}' ... ]{eoc}\n"
+# define SERV_GOODBYE2		"{magenta}[ {blue}# {cyan}G{green}O{yellow}O{red}D {yellow}B{green}Y{cyan}E {blue}# {magenta}] {black}\tpowered by upopee{eoc}\n"
 
 # define SERV_NOPARAM		"{red}Error:{eoc} no parameter given\n"
 # define SERV_BADPARAM		"{red}Error:{eoc} {yellow}%d{eoc} parameters given, only 1 needed\n"
@@ -93,8 +96,9 @@ void		terminate_session(void *win_data, size_t size);
 ** -- CLIENT STYLE --
 */
 
-# define CLIENT_PROMPT		"{yellow}Input >{eoc} "
-# define CLIENT_RUN			"{green}[Connection with {cyan}%s{green} etablished on fd {yellow}%d{green}]{eoc}\n"
+# define CLIENT_PROMPT		"{magenta}Your message here >{eoc} "
+# define CLIENT_CONNECTING	"{yellow}[ Connecting {cyan}%s{green} to the server ... ]{eoc}\n"
+# define CLIENT_CONNECTED	"{green}[ Connexion etablished ]{eoc}\n"
 
 /*
 ** -- SYSTEM ACTIONS INFOS --

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 10:38:45 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/07 17:41:46 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int		check_params(int argc)
 		return (-1);
 	return (0);
 }
+*/
 
 static void		main_loop(int in_fd)
 {
@@ -49,6 +50,7 @@ static void		main_loop(int in_fd)
 	}
 }
 
+/*
 int		main(int argc, char **argv)
 {
 	int		in_fd;
@@ -75,13 +77,12 @@ int		main(int argc, char **argv)
 
 int		main(void)
 {
-	char	*argv[] = {"./log/scripts/open_in_tab.sh", "-e", "../../log_server", "-f", "/tmp/test.log", "-o", "v"};
+	int			fd = init_logwindow(LOG_F_VERBOSE);
+//	t_logwin	*win = find_logwin(&fd, &item_fd_cmp);
 
-	//logwindow_new(LOG_VERBOSE);
-	ft_printf("{magenta}> CHILD <{eoc}\nExecuting the execve command: {cyan}%s %s %s %s{eoc}\n", argv[0], argv[1], argv[2], argv[3]);
-	execve("/bin/bash", argv, NULL);
-//	while (1)
-//		continue ;
-//	close_allwindows();
+	ft_printf("{red}> STARTING LOOP <{eoc}\n");
+	main_loop(fd);
+	close_allwindows();
+	ft_printf("{red}> TERMINATING FATHER -- END OF PROGRAM <{eoc}\n");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 10:45:22 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/07 18:09:02 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 {
 	int		i;
 
-	i = -1;
-	while (++i < argc)
-		ft_printf("argv[%d] = '{cyan}%s{eoc}'\n", i, argv[i]);
 	*fifo = argv[1];
 	while (--argc > 1)
 	{
@@ -34,9 +31,9 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 		while (argv[argc][++i])
 		{
 			if (argv[argc][i] == 'v')
-				*s_flags |= LOG_VERBOSE;
+				*s_flags |= LOG_F_VERBOSE;
 			else if (argv[argc][i] == 'n')
-				*s_flags &= ~(LOG_PRINT_NEWLINE);
+				*s_flags |= LOG_F_NONEWLINE;
 			else
 				return (-1);
 		}
@@ -71,10 +68,10 @@ static void		main_loop(int in_fd, int s_flags)
 			break ;
 		else if (ft_strcmp("", buff) != 0)
 		{
-			if (s_flags & LOG_PRINT_NEWLINE)
-				ft_putendl(buff);
-			else
+			if (s_flags & LOG_F_NONEWLINE)
 				ft_putstr(buff);
+			else
+				ft_putendl(buff);
 		}
 	}
 }
@@ -86,7 +83,8 @@ int		main(int argc, char **argv)
 	int		 	s_flags;
 	int			o_flags;
 
-	s_flags = LOG_NONE | LOG_PRINT_NEWLINE;
+	ft_printf("{blue}Connection started by remote host\nServer initialisation...\n{eoc}");
+	s_flags = LOG_F_NONE;
 	fifo = NULL;
 	if (decode_params(argc, argv, &fifo, &s_flags) == -1)
 		return (-1);
@@ -99,7 +97,7 @@ int		main(int argc, char **argv)
 		close_pipe(in_fd, fifo, s_flags);
 		return (-1);
 	}
-	if (s_flags & LOG_VERBOSE)
+	if (s_flags & LOG_F_VERBOSE)
 	{
 		ft_printf(SERV_WELCOME1);
 		ft_printf(SERV_WELCOME2, fifo, in_fd);

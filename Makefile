@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/07 06:07:43 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/07 16:13:56 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -258,7 +258,8 @@ LOGCLT_SRC =		$(patsubst %,$(LOG_DIR)/$(SRC_DIR)/%,$(LOG_CLIENT:=.c))
 LOG_SRC =			$(patsubst %,$(LOG_DIR)/$(SRC_DIR)/%,$(LOG_FILES:=.c))
 LOG_SERVER =		log_server
 LOG_CLIENT =		log_client
-LOG_FILES =			log_management \
+LOG_FILES =			log_initwindow \
+					log_management \
 					log_tools \
 
 
@@ -284,12 +285,12 @@ $(NAME): $(OBJ_DIR) $(LIBFT_OBJS)
 	@$(AR) $(NAME) $(LIBFT_OBJS)
 	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Library created\t$(GREEN_B)✓$(EOC)\n"
 
-$(LOG_SERVER): $(OBJ_DIR) $(LIBFT_OBJS) $(LOGSERV_OBJS)
-	@$(CC) -o $@ $(LOGSERV_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
+$(LOG_SERVER): $(OBJ_DIR) $(LOGSERV_OBJS)
+	@$(CC) -o $@ $(LOGSERV_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS)
 	@printf "\r$(ERASELN)> $(YELLOW)$(LOG_SERVER)$(EOC) : Binary created\t$(GREEN_B)✓$(EOC)\n"
 
-$(LOG_CLIENT): $(OBJ_DIR) $(LIBFT_OBJS) $(LOGCLT_OBJS)
-	@$(CC) -o $@ $(LOGCLT_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
+$(LOG_CLIENT): $(OBJ_DIR) $(LOGCLT_OBJS)
+	@$(CC) -o $@ $(LOGCLT_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS)
 	@printf "\r$(ERASELN)> $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary created\t$(GREEN_B)✓$(EOC)\n"
 
 $(OBJ_DIR):
