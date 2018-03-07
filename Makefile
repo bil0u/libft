@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/07 05:08:00 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/07 05:16:53 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -312,6 +312,11 @@ fclean: clean
 	then \
 		$(RM) $(LOG_SERVER); \
 		printf "> $(YELLOW)$(LOG_SERVER)$(EOC) : Binary deleted\t$(RED_B)✗$(EOC)\n"; \
+	fi
+	@if [ -e $(LOG_CLIENT) ]; \
+	then \
+		$(RM) $(LOG_CLIENT); \
+		printf "> $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary deleted\t$(RED_B)✗$(EOC)\n"; \
 	fi
 
 re: fclean
