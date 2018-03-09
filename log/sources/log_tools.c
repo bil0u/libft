@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 00:50:24 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:29:19 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,6 @@ int			item_fifo_cmp(t_logwin *item, void *fifo_ref)
 	return (ft_strcmp(item->fifo, (char *)fifo_ref));
 }
 
-t_logwin	*find_logwin(void *data_ref, int (*cmp)())
-{
-	t_logenv	*env;
-	t_list		*log_win;
-
-	env = get_logservice_env();
-	log_win = ft_lstfind(env->log_windows, data_ref, cmp);
-	if (log_win)
-		return (log_win->content);
-	return (NULL);
-}
-
 int			close_pipe(int fd, char *fifo, int s_flags)
 {
 	int		ret;
@@ -55,7 +43,6 @@ int			close_pipe(int fd, char *fifo, int s_flags)
 	ret = 0;
 	if (fd != -1)
 	{
-		ft_putstr_fd(SERV_EXIT_STR, fd);
 		ret += close(fd);
 		if (s_flags & LOG_F_VERBOSE)
 		{

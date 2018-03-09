@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 04:30:07 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:30:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,9 @@ int				init_logwindow(int flags)
 		child.args = gen_execve_args(new_logwin.fifo, flags);
 		execve((char *)child.args[0], (char **)child.args, environ);
 		ft_tabstrdel(&(child.args));
-		exit (0);
+		exit(0);
 	}
+	wait(NULL);
 	new_logwin.pid = child.fork_pid;
 	if (open_fifotmp(env, &new_logwin, flags) == -1)
 		return (-1);

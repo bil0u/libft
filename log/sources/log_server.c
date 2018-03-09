@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 05:45:15 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:30:47 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ static void		main_loop(int in_fd, int out_fd, int s_flags)
 		close(out_fd);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	int			in_fd;
 	int			out_fd;
 	char		*fifo;
-	int		 	s_flags;
+	int			s_flags;
 
 	ft_printf(SERV_INIT);
 	if (decode_params(argc, argv, &fifo, &s_flags) == -1)

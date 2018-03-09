@@ -6,12 +6,24 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:40:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 00:39:07 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:29:33 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "log.h"
+
+t_logwin	*find_logwin(void *data_ref, int (*cmp)())
+{
+	t_logenv	*env;
+	t_list		*log_win;
+
+	env = get_logservice_env();
+	log_win = ft_lstfind(env->log_windows, data_ref, cmp);
+	if (log_win)
+		return (log_win->content);
+	return (NULL);
+}
 
 int			ft_logthis(int fd, char *msg)
 {
