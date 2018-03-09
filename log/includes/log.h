@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:48:30 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 19:07:34 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_execve
 # define LOG_F_NONEWLINE (1)
 # define LOG_F_VERBOSE (1 << 1)
 # define LOG_F_SAVE (1 << 2)
+# define LOG_F_CLOSE (1 << 3)
 
 typedef struct	s_logwin
 {

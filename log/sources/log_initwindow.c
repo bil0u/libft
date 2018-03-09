@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:46:00 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 19:38:15 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ static char		**gen_execve_args(char *fifo, int flags)
 		flags & LOG_F_VERBOSE ? overwrite[i++] = 'v' : (void)i;
 		flags & LOG_F_NONEWLINE ? overwrite[i++] = 'n' : (void)i;
 		flags & LOG_F_SAVE ? overwrite[i++] = 's' : (void)i;
+		flags & LOG_F_CLOSE ? overwrite[i++] = 'c' : (void)i;
 	}
 	return (ft_strsplit(to_split, ' '));
 }
 
 int				init_logwindow(int flags)
 {
-	extern char	**environ;
 	t_execve	child;
 	t_logenv	*env;
 	t_logwin	new_logwin;
@@ -91,7 +91,7 @@ int				init_logwindow(int flags)
 	if ((child.fork_pid = fork()) == 0)
 	{
 		child.args = gen_execve_args(new_logwin.fifo, flags);
-		execve((char *)child.args[0], (char **)child.args, environ);
+		execv((char *)child.args[0], (char **)child.args);
 		ft_tabstrdel(&(child.args));
 		exit(0);
 	}

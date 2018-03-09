@@ -6,13 +6,14 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:29:19 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 19:37:59 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <signal.h>
 #include "ft_printf.h"
 #include "read_write.h"
 #include "memory.h"
@@ -65,5 +66,6 @@ void		terminate_session(void *win_data, size_t size)
 	to_close = (t_logwin *)win_data;
 	if (close_pipe(to_close->fd, to_close->fifo, to_close->flags) > 0)
 		ft_dprintf(2, LOG_ERR_CLOSE, to_close->fifo, to_close->fd);
+	// kill(to_close->pid, SIGKILL);
 	ft_memdel((void **)&to_close);
 }

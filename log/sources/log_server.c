@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:30:47 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 19:25:47 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <signal.h>
 #include "ft_printf.h"
 #include "memory.h"
 #include "strings.h"
@@ -36,6 +38,8 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 				*s_flags |= LOG_F_NONEWLINE;
 			else if (argv[argc][i] == 's')
 				*s_flags |= LOG_F_SAVE;
+			else if (argv[argc][i] == 'c')
+				*s_flags |= LOG_F_CLOSE;
 			else
 				return (-1);
 		}
@@ -129,5 +133,7 @@ int				main(int argc, char **argv)
 	main_loop(in_fd, out_fd, s_flags);
 	if (s_flags & LOG_F_VERBOSE)
 		ft_printf(SERV_GOODBYE, fifo);
+	if (s_flags & LOG_F_CLOSE)
+		kill(getppid(), SIGKILL);
 	return (0);
 }
