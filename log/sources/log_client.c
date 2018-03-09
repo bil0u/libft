@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 17:41:46 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 01:44:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int		check_params(int argc)
 }
 */
 
-static void		main_loop(int in_fd)
+/*
+static void		main_loop(int fd)
 {
 	char	*buff;
 
@@ -39,16 +40,17 @@ static void		main_loop(int in_fd)
 	while (1)
 	{
 		ft_printf(CLIENT_PROMPT);
-		if (get_next_line(STDIN_FILENO, &buff) == 0
-			|| ft_strcmp("exit", buff) == 0)
+		if (!get_next_line(STDIN_FILENO, &buff)
+			|| ft_strequ(SERV_EXIT_STR, buff))
 		{
-			ft_dprintf(in_fd, "exit");
+			ft_logthis(fd, SERV_EXIT_STR);
 			break ;
 		}
-		ft_dprintf(in_fd, buff);
+		ft_putstr_fd(buff, fd);
 		ft_strdel(&buff);
 	}
 }
+*/
 
 /*
 int		main(int argc, char **argv)
@@ -68,21 +70,22 @@ int		main(int argc, char **argv)
 		ft_dprintf(2, LOG_ERR_OPEN, fifo);
 		return (-1);
 	}
-	ft_printf(CLIENT_RUN, fifo, in_fd);
+	ft_printf(CLIENT_CONNECTING, fifo, in_fd);
 	main_loop(in_fd);
 	close(in_fd);
 	return (0);
 }
 */
 
+
 int		main(void)
 {
-	int			fd = init_logwindow(LOG_F_VERBOSE);
-//	t_logwin	*win = find_logwin(&fd, &item_fd_cmp);
+	int			fd;
 
-	ft_printf("{red}> STARTING LOOP <{eoc}\n");
-	main_loop(fd);
-	close_allwindows();
-	ft_printf("{red}> TERMINATING FATHER -- END OF PROGRAM <{eoc}\n");
+	fd = init_logwindow(LOG_F_VERBOSE);
+	//main_loop(fd);
+	while (1)
+		continue ;
+	close_window(fd);
 	return (0);
 }

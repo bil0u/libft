@@ -6,14 +6,14 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:40:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 18:16:44 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 00:39:07 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "log.h"
 
-int			print_to_window(int fd, char *msg)
+int			ft_logthis(int fd, char *msg)
 {
 	t_logenv	*env;
 

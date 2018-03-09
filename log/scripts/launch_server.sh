@@ -3,32 +3,30 @@
 # Open new Terminal window from the command line
 #
 # Usage:
-#     /bin/bash ./server_launch.sh [FIFO] [FLAGS]
-#     [FIFO]            Open PATH in a new tab
-#     [FLAGS]             Open a new tab and execute CMD
+#	/bin/bash ./server_launch.sh -f [FILE] [-o [OPTIONS]]
+#		[FILE]			File to read on
+#		[OPTIONS]		Options to pass to the log_server
 
 while getopts f:o: option
 do
 case "${option}"
 in
-f) FIFO=${OPTARG};;
+f) FILE=${OPTARG};;
 o) OPTIONS=${OPTARG};;
 esac
 done
 
-EXEC='./log_server'
-SCRIPTPATH='\/log\/scripts'
-SERVPATH=$(echo $PWD | sed "s/$SCRIPTPATH//")
-CD_CMD="cd $SERVPATH"
-RUN_CMD="$EXEC $FIFO $OPTIONS"
+SCRIPTPATH='\/log\/scripts\/launch_server.sh'
+EXEC='\/log_server'
+RUN_CMD=$(echo $0 | sed "s/$SCRIPTPATH/$EXEC/")
+
+echo $RUN_CMD
 
 exec osascript <<END
 tell application "iTerm"
 	set currWin to (create window with default profile)
 	tell current session of currWin
-		write text "cd $SERVPATH"
-		write text "clear"
-		write text "$RUN_CMD"
+		write text "$RUN_CMD $FILE $OPTIONS"
 	end tell
 end tell
 END

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 18:09:02 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 01:39:33 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 
 static int		decode_params(int argc, char **argv, char **fifo, int *s_flags)
 {
-	if (argc == 1 || ft_strcmp(argv[1], "") == 0)
+	if (argc == 1 || ft_strequ(argv[1], ""))
 	{
 		ft_dprintf(2, SERV_NOPARAM);
 		return (-1);
@@ -63,8 +63,7 @@ static void		main_loop(int in_fd, int s_flags)
 	while (1)
 	{
 		ft_bzero(buff, LOG_BUFF_SIZE);
-		read(in_fd, buff, LOG_BUFF_SIZE);
-		if (ft_strcmp("exit", buff) == 0)
+		if (!read(in_fd, buff, LOG_BUFF_SIZE))
 			break ;
 		else if (ft_strcmp("", buff) != 0)
 		{
@@ -83,7 +82,7 @@ int		main(int argc, char **argv)
 	int		 	s_flags;
 	int			o_flags;
 
-	ft_printf("{blue}Connection started by remote host\nServer initialisation...\n{eoc}");
+	ft_printf(SERV_INIT);
 	s_flags = LOG_F_NONE;
 	fifo = NULL;
 	if (decode_params(argc, argv, &fifo, &s_flags) == -1)
@@ -98,10 +97,9 @@ int		main(int argc, char **argv)
 		return (-1);
 	}
 	if (s_flags & LOG_F_VERBOSE)
-	{
-		ft_printf(SERV_WELCOME1);
-		ft_printf(SERV_WELCOME2, fifo, in_fd);
-	}
+		ft_printf(SERV_WELCOME, fifo);
 	main_loop(in_fd, s_flags);
-	return (close_pipe(in_fd, fifo, s_flags));
+	if (s_flags & LOG_F_VERBOSE)
+		ft_printf(SERV_GOODBYE, fifo);
+	return (0);
 }

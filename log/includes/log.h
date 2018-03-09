@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/07 19:06:37 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 04:18:10 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 # define LOG_BUFF_SIZE		4096
 # define LOG_ARGS_MAXSIZE	256
-# define LOG_EXEC_MAXARGS	6
 # define LOG_EXEC_BSIZE		32
 
 # define LOG_NB_FLAGS		2
@@ -33,7 +32,7 @@
 typedef struct	s_execve
 {
 	pid_t		fork_pid;
-	char		args[LOG_EXEC_MAXARGS][LOG_ARGS_MAXSIZE];
+	char		**args;
 }				t_execve;
 
 
@@ -42,7 +41,7 @@ typedef struct	s_logwin
 	pid_t		pid;
 	int			fd;
 	int			flags;
-	char		fifo[LOG_ARGS_MAXSIZE];
+	char		fifo[MAXPATHLEN];
 }				t_logwin;
 
 typedef struct	s_logenv
@@ -56,7 +55,7 @@ typedef struct	s_logenv
 */
 
 int			init_logwindow(int flags);
-int			print_to_window(int fd, char *msg);
+int			ft_logthis(int fd, char *msg);
 int			close_window(int fd);
 void		close_allwindows(void);
 
@@ -78,13 +77,13 @@ void		terminate_session(void *win_data, size_t size);
 # define SCRIPT_RPATH		"libft/log/scripts/launch_server.sh"
 
 # define SERV_FILE_TEMPLATE "/tmp/libft.log.XXX"
+# define SERV_EXIT_STR		"exit"
 
 # define SERV_PROMPT		"{yellow} >{eoc} "
 
-# define SERV_WELCOME1		"{yellow}[ Awesome logging tool v0.1 by {cyan}upopee{yellow} ]{eoc}\n"
-# define SERV_WELCOME2		"{green}[ Listening on {eoc}-->{green} '{cyan}%s{green}' ]{eoc}\n"
-# define SERV_GOODBYE1		"\n{red}[ Closing connection with '{cyan}%s{red}' ... ]{eoc}\n"
-# define SERV_GOODBYE2		"{magenta}[ {blue}# {cyan}G{green}O{yellow}O{red}D {yellow}B{green}Y{cyan}E {blue}# {magenta}] {black}\tpowered by upopee{eoc}\n"
+# define SERV_INIT			"{blue}Connection started by client\nServer initialisation...\n{eoc}"
+# define SERV_WELCOME		"{yellow}[ Awesome logging tool v0.1 by {cyan}upopee{yellow} ]{eoc}\n{green}[ Listening on --> '{cyan}%s{green}' ]{eoc}\n"
+# define SERV_GOODBYE		"\n{red}[ Closing connection with '{cyan}%s{red}' ]{eoc}\n{magenta}[ {blue}#   {cyan}G {green}O {yellow}O {red}D   {magenta}B {blue}Y {cyan}E   {green}# {yellow} ]{eoc}\n"
 
 # define SERV_NOPARAM		"{red}Error:{eoc} no parameter given\n"
 # define SERV_BADPARAM		"{red}Error:{eoc} {yellow}%d{eoc} parameters given, only 1 needed\n"
@@ -97,8 +96,8 @@ void		terminate_session(void *win_data, size_t size);
 */
 
 # define CLIENT_PROMPT		"{magenta}Your message here >{eoc} "
-# define CLIENT_CONNECTING	"{yellow}[ Connecting {cyan}%s{green} to the server ... ]{eoc}\n"
-# define CLIENT_CONNECTED	"{green}[ Connexion etablished ]{eoc}\n"
+# define CLIENT_CONNECTED	"{green}[ Connected on '{cyan}%s{green}' ]{eoc}\n"
+# define CLIENT_CLOSING		"{red}[ Connexion with '{cyan}%s{red}' closed ]{eoc}\n"
 
 /*
 ** -- SYSTEM ACTIONS INFOS --

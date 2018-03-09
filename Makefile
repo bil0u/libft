@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/07 16:13:56 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/08 22:32:44 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME =				libft.a
 CC =				gcc
-CFLAGS =			-Wall -Werror -Wextra
+CFLAGS =			-Wall -Werror -Wextra -g
 CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
 					-I $(CHAR_DIR)/$(INC_DIR) \
 					-I $(STR_DIR)/$(INC_DIR) \
@@ -130,6 +130,8 @@ STR_FILES =			ft_strnew \
 					ft_strishex \
 					\
 					ft_nextws \
+					\
+					ft_tabstrdel \
 
 WSTR_DIR =			wide_strings
 WSTR_SRC =			$(patsubst %,$(WSTR_DIR)/$(SRC_DIR)/%,$(WSTR_FILES:=.c))
