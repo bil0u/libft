@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:28:27 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:49:40 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,8 @@ static void		main_loop(int fd)
 	{
 		ft_printf(CLIENT_PROMPT);
 		if (!get_next_line(STDIN_FILENO, &buff)
-			|| ft_strequ(SERV_EXIT_STR, buff))
-		{
-			ft_logthis(fd, SERV_EXIT_STR);
+			|| ft_strequ("exit", buff))
 			break ;
-		}
 		ft_putstr_fd(buff, fd);
 		ft_strdel(&buff);
 	}

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:30:14 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:46:00 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		gen_fifotmp(t_logenv *env, t_logwin *win)
 {
 	char		*overwrite;
 
-	ft_strcpy(win->fifo, SERV_FILE_TEMPLATE);
+	ft_strcpy(win->fifo, LOG_FILE_TEMPLATE);
 	overwrite = ft_strchr(win->fifo, 'X');
 	ft_sprintf(overwrite, "%3.3hhu", env->nb_inst + 1);
 }
@@ -62,8 +62,8 @@ static char		**gen_execve_args(char *fifo, int flags)
 	char		*overwrite;
 	int			i;
 
-	ft_bzero(to_split, LOG_ARGS_MAXSIZE);
-	ft_bzero(serv_path, LOG_ARGS_MAXSIZE);
+	ft_bzero(to_split, MAXPATHLEN);
+	ft_bzero(serv_path, MAXPATHLEN);
 	get_serv_ap(serv_path);
 	ft_sprintf(to_split, "/bin/bash %s -f %s", serv_path, fifo);
 	overwrite = ft_strchr(to_split, '\0');

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:40:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:29:33 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:48:44 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ t_logwin	*find_logwin(void *data_ref, int (*cmp)())
 	return (NULL);
 }
 
-int			ft_logthis(int fd, char *msg)
+int			ft_logthis(int fd, int flags, char *s)
 {
+	char		tmp[LOG_BUFF_SIZE];
 	t_logenv	*env;
 
 	env = get_logservice_env();
@@ -37,7 +38,11 @@ int			ft_logthis(int fd, char *msg)
 	}
 	else
 	{
-		ft_dprintf(fd, msg);
+		flags == LOG_F_ERR ? ft_sprintf(tmp, "%s%s", LOG_ERR, s) : (void)env;
+		flags == LOG_F_WARN ? ft_sprintf(tmp, "%s%s", LOG_WARN, s) : (void)env;
+		flags == LOG_F_INFO ? ft_sprintf(tmp, "%s%s", LOG_INFO, s) : (void)env;
+		flags == 0 ? ft_sprintf(tmp, "%s", s) : (void)env;
+		ft_dprintf(fd, tmp);
 		return (0);
 	}
 }

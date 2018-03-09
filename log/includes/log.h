@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:27:37 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 07:48:30 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,22 @@
 # include <fcntl.h>
 # include <inttypes.h>
 # include <sys/param.h>
-# include "../../linked_lists/includes/linked_lists.h"
+# include "linked_lists.h"
 
 # define LOG_BUFF_SIZE 4096
-# define LOG_ARGS_MAXSIZE 256
-# define LOG_EXEC_BSIZE 32
-
-# define LOG_NB_FLAGS 2
-# define LOG_F_NONE (0)
-# define LOG_F_NONEWLINE (1)
-# define LOG_F_VERBOSE (1 << 1)
-# define LOG_F_SAVE (1 << 2)
+# define SCRIPT_RPATH "libft/log/scripts/launch_server.sh"
+# define LOG_FILE_TEMPLATE "/tmp/libft.log.XXX"
 
 typedef struct	s_execve
 {
 	pid_t		fork_pid;
 	char		**args;
 }				t_execve;
+
+# define LOG_F_NONE (0)
+# define LOG_F_NONEWLINE (1)
+# define LOG_F_VERBOSE (1 << 1)
+# define LOG_F_SAVE (1 << 2)
 
 typedef struct	s_logwin
 {
@@ -50,11 +49,11 @@ typedef struct	s_logenv
 }				t_logenv;
 
 /*
-** -- CLIENT SIDE FUNCTIONS --
+** -- CLIENT FUNCTIONS --
 */
 
 int				init_logwindow(int flags);
-int				ft_logthis(int fd, char *msg);
+int				ft_logthis(int fd, int flags, char *msg);
 int				close_window(int fd);
 void			close_allwindows(void);
 
@@ -72,18 +71,17 @@ void			terminate_session(void *win_data, size_t size);
 ** -- GLOBAL STYLE --
 */
 
-# define LOG_ERR "{red}[ ERROR ]{eoc}"
-# define LOG_WARN "{yellow}[ WARNING ]{eoc}"
-# define LOG_INFO "{cyan}[ INFO ]{eoc}"
+# define LOG_F_ERR (1)
+# define LOG_F_WARN (2)
+# define LOG_F_INFO (3)
+
+# define LOG_ERR "{red}[ ERROR ]{eoc} "
+# define LOG_WARN "{yellow}[ WARNING ]{eoc} "
+# define LOG_INFO "{cyan}[ INFO ]{eoc} "
 
 /*
 ** -- SERVER STYLE --
 */
-
-# define SCRIPT_RPATH "libft/log/scripts/launch_server.sh"
-
-# define SERV_FILE_TEMPLATE "/tmp/libft.log.XXX"
-# define SERV_EXIT_STR "exit"
 
 # define SERV_PROMPT "{yellow} >{eoc} "
 
@@ -100,7 +98,6 @@ void			terminate_session(void *win_data, size_t size);
 # define SERV_GDBYE2 "{eoc}\n{magenta}[ {blue}#   {cyan}G {green}O "
 # define SERV_GDBYE3 "{yellow}O {red}D   {magenta}B {blue}Y {cyan}E   "
 # define SERV_GDBYE4 "{green}# {yellow} ]{eoc}\n"
-
 # define SERV_GOODBYE SERV_GDBYE1 SERV_GDBYE2 SERV_GDBYE3 SERV_GDBYE4
 
 # define SERV_NOPARAM LOG_ERR "no parameter given\n"
@@ -113,9 +110,11 @@ void			terminate_session(void *win_data, size_t size);
 */
 
 # define CLIENT_PROMPT "{magenta}Your message here >{eoc} "
+
 # define CLIENT_CONNECTED1 "{green}[ Log window created, listening on"
 # define CLIENT_CONNECTED2 " '{cyan}%s{green}' ]{eoc}\n"
 # define CLIENT_CONNECTED CLIENT_CONNECTED1 CLIENT_CONNECTED2
+
 # define CLIENT_CLOSING "{red}[ Connexion with '{cyan}%s{red}' closed ]{eoc}\n"
 
 /*
