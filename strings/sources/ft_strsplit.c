@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 12:00:49 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/08 06:22:11 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 00:18:48 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ char				**ft_strsplit(char const *s, char c)
 	int				words;
 	char			**t;
 
-	i = 0;
-	words = ft_nbwords(s, c);
-	if (!s || !(t = (char **)ft_memalloc(sizeof(*t) * words + 1)))
+	if (!s)
 		return (NULL);
+	words = ft_nbwords(s, c);
+	if (!(t = (char **)ft_memalloc(sizeof(*t) * (words + 1))))
+		return (NULL);
+	i = 0;
 	while (words--)
 	{
 		while (*s == c && *s)
@@ -32,6 +34,6 @@ char				**ft_strsplit(char const *s, char c)
 			return (NULL);
 		s += ft_wordlen(s, c);
 	}
-	t[i] = 0;
+	t[i] = NULL;
 	return (t);
 }

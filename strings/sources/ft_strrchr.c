@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 12:00:36 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/08 06:22:13 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 00:20:37 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ char	*ft_strrchr(const char *s, int c)
 {
 	char *tmp;
 
-	tmp = (char *)s + ft_strlen((char *)s);
-	while (tmp >= s)
-		if (*tmp-- == c)
-			return ((char *)(tmp + 1));
+	if (s)
+	{
+		tmp = (char *)s + ft_strlen((char *)s);
+		while (tmp >= s)
+			if (*tmp-- == c)
+				return ((char *)(tmp + 1));
+	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:57:58 by upopee            #+#    #+#             */
-/*   Updated: 2016/11/28 11:58:26 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 00:03:01 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ size_t	ft_strlen(char *s)
 	size_t len;
 
 	len = 0;
-	while (s[len])
-		len++;
+	if (s)
+	{
+		while (s[len])
+			len++;
+	}
 	return (len);
 }

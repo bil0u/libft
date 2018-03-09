@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:55:49 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/26 14:21:20 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 00:09:31 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ char	*ft_strnchr(const char *s, int c, size_t len)
 			len--;
 		}
 	}
-	return (NULL);
+	return (c == '\0' && len > 0 ? (char *)s : NULL);
 }

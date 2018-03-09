@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_tabstrdel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/28 11:56:25 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 00:12:54 by upopee           ###   ########.fr       */
+/*   Created: 2018/03/08 22:15:00 by upopee            #+#    #+#             */
+/*   Updated: 2018/03/08 22:26:06 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stdlib.h>
 
-char	*ft_strcpy(char *dst, const char *src)
+void	ft_tabstrdel(char ***tab)
 {
-	char	*tmp;
+	int		i;
 
-	if (dst)
+	if (tab)
 	{
-		if (src)
+		if (*tab)
 		{
-			tmp = dst;
-			while (*src)
-				*tmp++ = *src++;
-			*tmp = '\0';
+			i = 0;
+			while ((*tab)[i])
+			{
+				free((*tab)[i]);
+				i++;
+			}
+			free(*tab);
 		}
-		return (dst);
+		*tab = NULL;
 	}
-	return (NULL);
 }

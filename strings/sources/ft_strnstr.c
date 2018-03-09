@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 12:00:23 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/08 06:22:14 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 00:17:08 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,22 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	char		*find;
 	const char	*limit;
 
-	if (!*needle)
-		return ((char *)haystack);
-	limit = haystack + len;
-	while (*haystack && (haystack <= limit))
+	if (haystack)
 	{
-		str = (char *)haystack;
-		find = (char *)needle;
-		while ((*str++ == *find++) && (str <= limit))
+		if (!needle || *needle == '\0')
+			return ((char *)haystack);
+		limit = haystack + len;
+		while (*haystack && (haystack <= limit))
 		{
-			if (*find == '\0')
-				return ((char *)haystack);
+			str = (char *)haystack;
+			find = (char *)needle;
+			while ((*str++ == *find++) && (str <= limit))
+			{
+				if (*find == '\0')
+					return ((char *)haystack);
+			}
+			haystack++;
 		}
-		haystack++;
 	}
 	return (NULL);
 }
