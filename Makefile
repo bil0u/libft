@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/08 22:32:44 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/09 05:49:01 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ ALL_OBJS =			$(LIBFT_OBJS) $(LOGSERV_OBJS) $(LOGCLT_OBJS)
 SRC_DIR =			sources
 INC_DIR =			includes
 OBJ_DIR =			.objects
+LOGS_DIR =			log_files
 
 # -- FILES --
 
@@ -303,6 +304,13 @@ clean:
 	then \
 		$(RMDIR) $(OBJ_DIR); \
 		printf "> $(YELLOW)$(NAME)$(EOC) : Objects deleted\t$(RED_B)✗$(EOC)\n"; \
+	fi;
+
+cleanlogs:
+	@if [ -e $(LOGS_DIR) ]; \
+	then \
+		$(RMDIR) $(LOGS_DIR); \
+		printf "> $(YELLOW)$(NAME)$(EOC) : Logs deleted\t$(RED_B)✗$(EOC)\n"; \
 	fi;
 
 fclean: clean

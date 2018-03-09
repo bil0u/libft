@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 01:44:25 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 04:26:28 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include "read_write.h"
 #include "log.h"
 
-/*
 static int		check_params(int argc)
 {
 	argc == 1 ? ft_dprintf(2, SERV_NOPARAM) : (void)argc;
@@ -29,9 +28,7 @@ static int		check_params(int argc)
 		return (-1);
 	return (0);
 }
-*/
 
-/*
 static void		main_loop(int fd)
 {
 	char	*buff;
@@ -50,9 +47,7 @@ static void		main_loop(int fd)
 		ft_strdel(&buff);
 	}
 }
-*/
 
-/*
 int		main(int argc, char **argv)
 {
 	int		in_fd;
@@ -70,22 +65,8 @@ int		main(int argc, char **argv)
 		ft_dprintf(2, LOG_ERR_OPEN, fifo);
 		return (-1);
 	}
-	ft_printf(CLIENT_CONNECTING, fifo, in_fd);
+	ft_printf(CLIENT_CONNECTED, fifo, in_fd);
 	main_loop(in_fd);
 	close(in_fd);
-	return (0);
-}
-*/
-
-
-int		main(void)
-{
-	int			fd;
-
-	fd = init_logwindow(LOG_F_VERBOSE);
-	//main_loop(fd);
-	while (1)
-		continue ;
-	close_window(fd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 04:21:44 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 04:30:07 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static char		**gen_execve_args(char *fifo, int flags)
 		i = 5;
 		flags & LOG_F_VERBOSE ? overwrite[i++] = 'v' : (void)i;
 		flags & LOG_F_NONEWLINE ? overwrite[i++] = 'n' : (void)i;
+		flags & LOG_F_SAVE ? overwrite[i++] = 's' : (void)i;
 	}
 	return (ft_strsplit(to_split, ' '));
 }

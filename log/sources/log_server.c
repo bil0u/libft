@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 01:39:33 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 05:45:15 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 				*s_flags |= LOG_F_VERBOSE;
 			else if (argv[argc][i] == 'n')
 				*s_flags |= LOG_F_NONEWLINE;
+			else if (argv[argc][i] == 's')
+				*s_flags |= LOG_F_SAVE;
 			else
 				return (-1);
 		}
@@ -43,24 +45,44 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 
 static int		decode_params(int argc, char **argv, char **fifo, int *s_flags)
 {
+	*s_flags = LOG_F_NONE;
 	if (argc == 1 || ft_strequ(argv[1], ""))
 	{
-		ft_dprintf(2, SERV_NOPARAM);
+		ft_dprintf(STDERR_FILENO, SERV_NOPARAM);
 		return (-1);
 	}
 	if (get_tokens(argc, argv, fifo, s_flags) == -1)
 	{
-		ft_dprintf(2, SERV_BADPARAM, argc - 1);
+		ft_dprintf(STDERR_FILENO, SERV_BADPARAM, argc - 1);
 		return (-1);
 	}
 	return (0);
 }
 
-static void		main_loop(int in_fd, int s_flags)
+static int		create_logfile(char *fifo, char *path)
+{
+	char	file[MAXPATHLEN];
+	char	*overwrite;
+	char	*needed;
+	int		out_fd;
+
+	ft_strcpy(file, path);
+	overwrite = ft_strrchr(file, '/') + 1;
+	ft_strcpy(overwrite, "log_files/");
+	overwrite += 10;
+	mkdir(file, 0777);
+	needed = ft_strrchr(fifo, '/') + 1;
+	ft_strcpy(overwrite, needed);
+	out_fd = open(file, O_WRONLY | O_CREAT | O_APPEND);
+	fchmod(out_fd, 0777);
+	return (out_fd);
+}
+
+static void		main_loop(int in_fd, int out_fd, int s_flags)
 {
 	char	buff[LOG_BUFF_SIZE];
 
-	while (1)
+	while (42)
 	{
 		ft_bzero(buff, LOG_BUFF_SIZE);
 		if (!read(in_fd, buff, LOG_BUFF_SIZE))
@@ -68,29 +90,34 @@ static void		main_loop(int in_fd, int s_flags)
 		else if (ft_strcmp("", buff) != 0)
 		{
 			if (s_flags & LOG_F_NONEWLINE)
+			{
 				ft_putstr(buff);
+				s_flags & LOG_F_SAVE ? ft_putstr_fd(buff, out_fd) : (void)buff;
+			}
 			else
+			{
 				ft_putendl(buff);
+				s_flags & LOG_F_SAVE ? ft_putendl_fd(buff, out_fd) : (void)buff;
+			}
 		}
 	}
+	if (s_flags & LOG_F_SAVE)
+		close(out_fd);
 }
 
 int		main(int argc, char **argv)
 {
 	int			in_fd;
+	int			out_fd;
 	char		*fifo;
 	int		 	s_flags;
-	int			o_flags;
 
 	ft_printf(SERV_INIT);
-	s_flags = LOG_F_NONE;
-	fifo = NULL;
 	if (decode_params(argc, argv, &fifo, &s_flags) == -1)
 		return (-1);
-	o_flags = O_RDONLY | O_NONBLOCK;
 	if (access(fifo, F_OK) < 0)
 		mkfifo(fifo, 0777);
-	if ((in_fd = open(fifo, o_flags)) == -1)
+	if ((in_fd = open(fifo, O_RDONLY | O_NONBLOCK)) == -1)
 	{
 		ft_dprintf(2, LOG_ERR_OPEN, argv[1]);
 		close_pipe(in_fd, fifo, s_flags);
@@ -98,7 +125,8 @@ int		main(int argc, char **argv)
 	}
 	if (s_flags & LOG_F_VERBOSE)
 		ft_printf(SERV_WELCOME, fifo);
-	main_loop(in_fd, s_flags);
+	out_fd = (s_flags & LOG_F_SAVE) ? create_logfile(fifo, argv[0]) : -1;
+	main_loop(in_fd, out_fd, s_flags);
 	if (s_flags & LOG_F_VERBOSE)
 		ft_printf(SERV_GOODBYE, fifo);
 	return (0);

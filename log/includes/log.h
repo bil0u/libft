@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 04:18:10 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/09 05:04:57 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define LOG_F_NONE			(0)
 # define LOG_F_NONEWLINE	(1)
 # define LOG_F_VERBOSE		(1 << 1)
+# define LOG_F_SAVE			(1 << 2)
 
 
 typedef struct	s_execve
@@ -96,7 +97,7 @@ void		terminate_session(void *win_data, size_t size);
 */
 
 # define CLIENT_PROMPT		"{magenta}Your message here >{eoc} "
-# define CLIENT_CONNECTED	"{green}[ Connected on '{cyan}%s{green}' ]{eoc}\n"
+# define CLIENT_CONNECTED	"{green}[ Log window created, listening on '{cyan}%s{green}' ]{eoc}\n"
 # define CLIENT_CLOSING		"{red}[ Connexion with '{cyan}%s{red}' closed ]{eoc}\n"
 
 /*

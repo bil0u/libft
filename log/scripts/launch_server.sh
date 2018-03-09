@@ -20,8 +20,6 @@ SCRIPTPATH='\/log\/scripts\/launch_server.sh'
 EXEC='\/log_server'
 RUN_CMD=$(echo $0 | sed "s/$SCRIPTPATH/$EXEC/")
 
-echo $RUN_CMD
-
 exec osascript <<END
 tell application "iTerm"
 	set currWin to (create window with default profile)
