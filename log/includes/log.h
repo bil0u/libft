@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 19:07:34 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/10 22:27:08 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <inttypes.h>
 # include <sys/param.h>
-# include "linked_lists.h"
+# include "../../linked_lists/includes/linked_lists.h"
 
 # define LOG_BUFF_SIZE 4096
 # define SCRIPT_RPATH "libft/log/scripts/launch_server.sh"

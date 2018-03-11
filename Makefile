@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/09 05:49:01 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/10 23:24:07 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -273,7 +273,7 @@ $(OBJ_DIR)/%.o: %.c Makefile
 	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
 	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46); index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
-	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Building library...  %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s%s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
+	@printf "\r> $(YELLOW)libft$(EOC) : Building objects...    %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s%s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
 	@$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
@@ -303,7 +303,7 @@ clean:
 	@if [ -e $(OBJ_DIR) ]; \
 	then \
 		$(RMDIR) $(OBJ_DIR); \
-		printf "> $(YELLOW)$(NAME)$(EOC) : Objects deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "> $(YELLOW)libft$(EOC) : Objects deleted\t$(RED_B)✗$(EOC)\n"; \
 	fi;
 
 cleanlogs:
