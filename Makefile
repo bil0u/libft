@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/10 23:24:07 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/13 14:23:22 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -262,7 +262,6 @@ LOG_SRC =			$(patsubst %,$(LOG_DIR)/$(SRC_DIR)/%,$(LOG_FILES:=.c))
 LOG_SERVER =		log_server
 LOG_CLIENT =		log_client
 LOG_FILES =			log_initwindow \
-					log_management \
 					log_tools \
 
 

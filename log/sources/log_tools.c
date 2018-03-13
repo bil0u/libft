@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 19:37:59 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:24:42 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,23 @@
 #include "strings.h"
 #include "log.h"
 
-t_logenv	*get_logservice_env(void)
+int			ft_logthis(int fd, int flags, char *s)
 {
-	static t_logenv	env = {0, 0};
+	char		tmp[LOG_BUFF_SIZE];
 
-	return (&env);
+	if (flags == LOG_F_ERR)
+		ft_sprintf(tmp, "%s%s", LOG_ERR, s);
+	else if (flags == LOG_F_WARN)
+		ft_sprintf(tmp, "%s%s", LOG_WARN, s);
+	else if (flags == LOG_F_INFO)
+		ft_sprintf(tmp, "%s%s", LOG_INFO, s);
+	else if (flags == 0)
+		ft_sprintf(tmp, "%s", s);
+	ft_dprintf(fd, tmp);
+	return (0);
 }
 
-int			item_fd_cmp(t_logwin *item, void *fd_ref)
-{
-	return (item->fd - *((int *)fd_ref));
-}
-
-int			item_fifo_cmp(t_logwin *item, void *fifo_ref)
-{
-	return (ft_strcmp(item->fifo, (char *)fifo_ref));
-}
-
-int			close_pipe(int fd, char *fifo, int s_flags)
+int			close_fifo(int fd, char *fifo, int flags)
 {
 	int		ret;
 
@@ -45,7 +44,7 @@ int			close_pipe(int fd, char *fifo, int s_flags)
 	if (fd != -1)
 	{
 		ret += close(fd);
-		if (s_flags & LOG_F_VERBOSE)
+		if (flags & LOG_F_VERBOSE)
 		{
 			if (ret)
 				ft_dprintf(2, LOG_ERR_CLOSE, fifo, fd);
@@ -55,17 +54,7 @@ int			close_pipe(int fd, char *fifo, int s_flags)
 	}
 	if (fifo)
 		ret += remove(fifo);
+	if (flags & LOG_F_CLOSE)
+		kill(getppid(), SIGKILL);
 	return (ret);
-}
-
-void		terminate_session(void *win_data, size_t size)
-{
-	t_logwin	*to_close;
-
-	(void)size;
-	to_close = (t_logwin *)win_data;
-	if (close_pipe(to_close->fd, to_close->fifo, to_close->flags) > 0)
-		ft_dprintf(2, LOG_ERR_CLOSE, to_close->fifo, to_close->fd);
-	// kill(to_close->pid, SIGKILL);
-	ft_memdel((void **)&to_close);
 }

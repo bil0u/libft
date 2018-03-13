@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 19:25:47 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:18:56 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int				main(int argc, char **argv)
 	if ((in_fd = open(fifo, O_RDONLY | O_NONBLOCK)) == -1)
 	{
 		ft_dprintf(2, LOG_ERR_OPEN, argv[1]);
-		close_pipe(in_fd, fifo, s_flags);
+		close_fifo(in_fd, fifo, s_flags);
 		return (-1);
 	}
 	if (s_flags & LOG_F_VERBOSE)
@@ -133,7 +133,6 @@ int				main(int argc, char **argv)
 	main_loop(in_fd, out_fd, s_flags);
 	if (s_flags & LOG_F_VERBOSE)
 		ft_printf(SERV_GOODBYE, fifo);
-	if (s_flags & LOG_F_CLOSE)
-		kill(getppid(), SIGKILL);
+	close_fifo(in_fd, fifo, s_flags);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/10 22:27:08 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:17:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct	s_execve
 }				t_execve;
 
 # define LOG_F_NONE (0)
-# define LOG_F_NONEWLINE (1)
-# define LOG_F_VERBOSE (1 << 1)
+# define LOG_F_VERBOSE (1)
+# define LOG_F_NONEWLINE (1 << 1)
 # define LOG_F_SAVE (1 << 2)
 # define LOG_F_CLOSE (1 << 3)
 
@@ -43,30 +43,13 @@ typedef struct	s_logwin
 	char		fifo[MAXPATHLEN];
 }				t_logwin;
 
-typedef struct	s_logenv
-{
-	uint8_t		nb_inst;
-	t_list		*log_windows;
-}				t_logenv;
-
 /*
-** -- CLIENT FUNCTIONS --
+** -- FUNCTIONS --
 */
 
 int				init_logwindow(int flags);
 int				ft_logthis(int fd, int flags, char *msg);
-int				close_window(int fd);
-void			close_allwindows(void);
-
-/*
-** -- TOOLS --
-*/
-
-t_logenv		*get_logservice_env(void);
-t_logwin		*find_logwin(void *data_ref, int (*cmp)());
-int				item_fd_cmp(t_logwin *item, void *fd_ref);
-int				close_pipe(int fd, char *fifo, int s_flags);
-void			terminate_session(void *win_data, size_t size);
+int				close_fifo(int fd, char *fifo, int s_flags);
 
 /*
 ** -- GLOBAL STYLE --

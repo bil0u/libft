@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 19:38:15 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:23:55 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@
 #include "ft_printf.h"
 #include "log.h"
 
-static void		gen_fifotmp(t_logenv *env, t_logwin *win)
+static void		gen_fifotmp(t_logwin *win, int nb_inst)
 {
 	char		*overwrite;
 
 	ft_strcpy(win->fifo, LOG_FILE_TEMPLATE);
 	overwrite = ft_strchr(win->fifo, 'X');
-	ft_sprintf(overwrite, "%3.3hhu", env->nb_inst + 1);
+	ft_sprintf(overwrite, "%3.3hhu", nb_inst);
 }
 
-static int		open_fifotmp(t_logenv *env, t_logwin *win, int flags)
+static int		open_fifotmp(t_logwin *win, int flags)
 {
 	win->flags = flags;
 	if (access(win->fifo, F_OK) < 0)
@@ -38,7 +38,6 @@ static int		open_fifotmp(t_logenv *env, t_logwin *win, int flags)
 		ft_dprintf(2, LOG_ERR_OPEN, win->fifo);
 		return (-1);
 	}
-	++env->nb_inst;
 	return (win->fd);
 }
 
@@ -81,13 +80,12 @@ static char		**gen_execve_args(char *fifo, int flags)
 
 int				init_logwindow(int flags)
 {
+	static int	nb_inst = 0;
 	t_execve	child;
-	t_logenv	*env;
 	t_logwin	new_logwin;
 
 	ft_bzero(&new_logwin, sizeof(new_logwin));
-	env = get_logservice_env();
-	gen_fifotmp(env, &new_logwin);
+	gen_fifotmp(&new_logwin, nb_inst + 1);
 	if ((child.fork_pid = fork()) == 0)
 	{
 		child.args = gen_execve_args(new_logwin.fifo, flags);
@@ -96,10 +94,9 @@ int				init_logwindow(int flags)
 		exit(0);
 	}
 	wait(NULL);
-	new_logwin.pid = child.fork_pid;
-	if (open_fifotmp(env, &new_logwin, flags) == -1)
+	if (open_fifotmp(&new_logwin, flags) == -1)
 		return (-1);
-	ft_lstadd(&(env->log_windows), ft_lstnew(&new_logwin, sizeof(new_logwin)));
+	++nb_inst;
 	if (flags & LOG_F_VERBOSE)
 		ft_printf(CLIENT_CONNECTED, new_logwin.fifo);
 	return (new_logwin.fd);
