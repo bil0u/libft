@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 14:23:55 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 15:53:56 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,21 @@
 #include "ft_printf.h"
 #include "log.h"
 
-static void		gen_fifotmp(t_logwin *win, int nb_inst)
+static int		open_fifotmp(char *fifo)
 {
-	char		*overwrite;
+	int		fd;
 
-	ft_strcpy(win->fifo, LOG_FILE_TEMPLATE);
-	overwrite = ft_strchr(win->fifo, 'X');
-	ft_sprintf(overwrite, "%3.3hhu", nb_inst);
-}
-
-static int		open_fifotmp(t_logwin *win, int flags)
-{
-	win->flags = flags;
-	if (access(win->fifo, F_OK) < 0)
-		mkfifo(win->fifo, 0777);
-	if ((win->fd = open(win->fifo, O_WRONLY)) == -1)
+	if (access(fifo, F_OK) < 0)
+		mkfifo(fifo, 0777);
+	if ((fd = open(fifo, O_WRONLY)) == -1)
 	{
-		ft_dprintf(2, LOG_ERR_OPEN, win->fifo);
+		ft_dprintf(2, LOG_ERR_OPEN, fifo);
 		return (-1);
 	}
-	return (win->fd);
+	return (fd);
 }
 
-static void		get_serv_ap(char *buff)
+static void		get_serv_path(char *buff)
 {
 	char		*overwrite;
 
@@ -63,7 +55,7 @@ static char		**gen_execve_args(char *fifo, int flags)
 
 	ft_bzero(to_split, MAXPATHLEN);
 	ft_bzero(serv_path, MAXPATHLEN);
-	get_serv_ap(serv_path);
+	get_serv_path(serv_path);
 	ft_sprintf(to_split, "/bin/bash %s -f %s", serv_path, fifo);
 	overwrite = ft_strchr(to_split, '\0');
 	if (flags)
@@ -81,23 +73,24 @@ static char		**gen_execve_args(char *fifo, int flags)
 int				init_logwindow(int flags)
 {
 	static int	nb_inst = 0;
-	t_execve	child;
-	t_logwin	new_logwin;
+	char		fifo[MAXPATHLEN];
+	char		**args;
+	int			fd;
 
-	ft_bzero(&new_logwin, sizeof(new_logwin));
-	gen_fifotmp(&new_logwin, nb_inst + 1);
-	if ((child.fork_pid = fork()) == 0)
+	ft_strcpy(fifo, LOG_FILE_TEMPLATE);
+	ft_sprintf(ft_strchr(fifo, 'X'), "%3.3hhu", nb_inst + 1);
+	if (fork() == 0)
 	{
-		child.args = gen_execve_args(new_logwin.fifo, flags);
-		execv((char *)child.args[0], (char **)child.args);
-		ft_tabstrdel(&(child.args));
+		args = gen_execve_args(fifo, flags);
+		execv(args[0], args);
+		ft_tabstrdel(&args);
 		exit(0);
 	}
 	wait(NULL);
-	if (open_fifotmp(&new_logwin, flags) == -1)
+	if ((fd = open_fifotmp(fifo)) == -1)
 		return (-1);
 	++nb_inst;
 	if (flags & LOG_F_VERBOSE)
-		ft_printf(CLIENT_CONNECTED, new_logwin.fifo);
-	return (new_logwin.fd);
+		ft_printf(CLIENT_CONNECTED, fifo);
+	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 14:18:56 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 15:50:12 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,6 @@ static int		decode_params(int argc, char **argv, char **fifo, int *s_flags)
 	return (0);
 }
 
-static int		create_logfile(char *fifo, char *path)
-{
-	char	file[MAXPATHLEN];
-	char	*overwrite;
-	char	*needed;
-	int		out_fd;
-
-	ft_strcpy(file, path);
-	overwrite = ft_strrchr(file, '/') + 1;
-	ft_strcpy(overwrite, "log_files/");
-	overwrite += 10;
-	mkdir(file, 0777);
-	needed = ft_strrchr(fifo, '/') + 1;
-	ft_strcpy(overwrite, needed);
-	out_fd = open(file, O_WRONLY | O_CREAT | O_APPEND);
-	fchmod(out_fd, 0777);
-	return (out_fd);
-}
-
 static void		main_loop(int in_fd, int out_fd, int s_flags)
 {
 	char	buff[LOG_BUFF_SIZE];
@@ -107,6 +88,29 @@ static void		main_loop(int in_fd, int out_fd, int s_flags)
 	}
 	if (s_flags & LOG_F_SAVE)
 		close(out_fd);
+}
+
+static int		close_fifo(int fd, char *fifo, int flags)
+{
+	int		ret;
+
+	ret = 0;
+	if (fd != -1)
+	{
+		ret += close(fd);
+		if (flags & LOG_F_VERBOSE)
+		{
+			if (ret)
+				ft_dprintf(2, LOG_ERR_CLOSE, fifo, fd);
+			else
+				ft_printf(CLIENT_CLOSING, fifo);
+		}
+	}
+	if (fifo)
+		ret += remove(fifo);
+	if (flags & LOG_F_CLOSE)
+		kill(getppid(), SIGKILL);
+	return (ret);
 }
 
 int				main(int argc, char **argv)

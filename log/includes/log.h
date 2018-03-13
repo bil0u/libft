@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 14:17:17 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 15:50:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,19 @@
 # define SCRIPT_RPATH "libft/log/scripts/launch_server.sh"
 # define LOG_FILE_TEMPLATE "/tmp/libft.log.XXX"
 
-typedef struct	s_execve
-{
-	pid_t		fork_pid;
-	char		**args;
-}				t_execve;
-
 # define LOG_F_NONE (0)
 # define LOG_F_VERBOSE (1)
 # define LOG_F_NONEWLINE (1 << 1)
 # define LOG_F_SAVE (1 << 2)
 # define LOG_F_CLOSE (1 << 3)
 
-typedef struct	s_logwin
-{
-	pid_t		pid;
-	int			fd;
-	int			flags;
-	char		fifo[MAXPATHLEN];
-}				t_logwin;
-
 /*
 ** -- FUNCTIONS --
 */
 
-int				init_logwindow(int flags);
-int				ft_logthis(int fd, int flags, char *msg);
-int				close_fifo(int fd, char *fifo, int s_flags);
+int		init_logwindow(int flags);
+int		ft_logthis(int fd, int flags, char *msg);
+int		create_logfile(char *fifo, char *path);
 
 /*
 ** -- GLOBAL STYLE --

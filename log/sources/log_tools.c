@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 14:24:42 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 15:49:40 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,21 @@ int			ft_logthis(int fd, int flags, char *s)
 	return (0);
 }
 
-int			close_fifo(int fd, char *fifo, int flags)
+int			create_logfile(char *fifo, char *path)
 {
-	int		ret;
+	char	file[MAXPATHLEN];
+	char	*overwrite;
+	char	*needed;
+	int		out_fd;
 
-	ret = 0;
-	if (fd != -1)
-	{
-		ret += close(fd);
-		if (flags & LOG_F_VERBOSE)
-		{
-			if (ret)
-				ft_dprintf(2, LOG_ERR_CLOSE, fifo, fd);
-			else
-				ft_printf(CLIENT_CLOSING, fifo);
-		}
-	}
-	if (fifo)
-		ret += remove(fifo);
-	if (flags & LOG_F_CLOSE)
-		kill(getppid(), SIGKILL);
-	return (ret);
+	ft_strcpy(file, path);
+	overwrite = ft_strrchr(file, '/') + 1;
+	ft_strcpy(overwrite, "log_files/");
+	overwrite += 10;
+	mkdir(file, 0777);
+	needed = ft_strrchr(fifo, '/') + 1;
+	ft_strcpy(overwrite, needed);
+	out_fd = open(file, O_WRONLY | O_CREAT | O_APPEND);
+	fchmod(out_fd, 0777);
+	return (out_fd);
 }
