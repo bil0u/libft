@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 19:31:52 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 22:21:35 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void		get_serv_path(char *buff)
 	ft_strcpy(overwrite, SCRIPT_RPATH);
 }
 
-static char		**gen_execve_args(char *fifo, int flags)
+static char		**gen_execve_args(char *fifo, int w_flags)
 {
 	char		to_split[MAXPATHLEN];
 	char		serv_path[MAXPATHLEN];
@@ -58,28 +58,28 @@ static char		**gen_execve_args(char *fifo, int flags)
 	get_serv_path(serv_path);
 	ft_sprintf(to_split, "/bin/bash %s -f %s", serv_path, fifo);
 	overwrite = ft_strchr(to_split, '\0');
-	if (flags)
+	if (w_flags)
 	{
 		ft_strcpy(overwrite, " -o -");
 		i = 5;
-		flags & LOG_F_VERBOSE ? overwrite[i++] = 'v' : (void)i;
-		flags & LOG_F_SAVE ? overwrite[i++] = 's' : (void)i;
-		flags & LOG_F_CLOSE ? overwrite[i++] = 'c' : (void)i;
+		w_flags & WF_VERBOSE ? overwrite[i++] = 'v' : (void)i;
+		w_flags & WF_SAVE ? overwrite[i++] = 's' : (void)i;
+		w_flags & WF_CLOSE ? overwrite[i++] = 'c' : (void)i;
 	}
 	return (ft_strsplit(to_split, ' '));
 }
 
-static int		init_logwindow(int flags, uint8_t win_no)
+static int		init_logwindow(int w_flags, int win_no)
 {
 	char		fifo[MAXPATHLEN];
 	char		**args;
 	int			fd;
 
 	ft_strcpy(fifo, LOG_FILE_TEMPLATE);
-	ft_sprintf(ft_strchr(fifo, 'X'), "%3.3hhu", win_no);
+	ft_sprintf(ft_strchr(fifo, 'X'), "%3.3d", win_no);
 	if (fork() == 0)
 	{
-		args = gen_execve_args(fifo, flags);
+		args = gen_execve_args(fifo, w_flags);
 		execv(args[0], args);
 		ft_tabstrdel(&args);
 		exit(0);
@@ -91,24 +91,24 @@ static int		init_logwindow(int flags, uint8_t win_no)
 	return (fd);
 }
 
-int				new_logwindow(char *name, int flags)
+int				new_logwindow(char *win_name, int w_flags)
 {
 	t_logenv	*env;
 	t_logwin	*win;
 
-	if (get_logwin(name) != NULL)
+	env = get_logenv();
+	if ((win = get_logwin(win_name)) != NULL || env->nb_wins == NB_MAXWIN)
 	{
-		ft_dprintf(2, LOG_ERR_WINEXIST, name);
+		ft_dprintf(2, (win ? LOG_ERR_WINEXIST : LOG_ERR_MAXWINS), win_name);
 		return (-1);
 	}
-	env = get_logenv();
-	win = &(env->windows[env->nb_inst]);
-	if ((win->fd = init_logwindow(flags, env->nb_inst + 1)) == -1)
-		ft_dprintf(2, LOG_ERR_WINCRASH, name);
-	else
+	win = &(env->windows[env->nb_wins]);
+	if ((win->fd = init_logwindow(w_flags, env->nb_wins + 1)) == -1)
 	{
-		env->nb_inst++;
-		ft_strncpy(win->name, name, NAME_MAXLEN);
+		ft_dprintf(2, LOG_ERR_WINCRASH, win_name);
+		return (-1);
 	}
+	ft_strncpy(win->name, win_name, NAME_MAXLEN);
+	env->nb_wins++;
 	return (win->fd);
 }

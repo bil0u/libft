@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 19:30:40 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 22:38:24 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@
 #include "strings.h"
 #include "log.h"
 
-t_logenv	*get_logenv(void)
+t_logenv		*get_logenv(void)
 {
-	static t_logenv		env;
+	static t_logenv	env;
 
 	return (&env);
 }
 
-t_logwin	*get_logwin(char *to_find)
+t_logwin		*get_logwin(char *to_find)
 {
 	t_logenv	*env;
 	uint8_t		i;
 
 	env = get_logenv();
 	i = 0;
-	while (i < env->nb_inst)
+	while (i < env->nb_wins)
 	{
 		if (ft_strequ(env->windows[i].name, to_find))
 			return (&(env->windows[i]));
@@ -43,37 +43,45 @@ t_logwin	*get_logwin(char *to_find)
 	return (NULL);
 }
 
-int			ft_logthis(int fd, int flags, char *s)
+int				log_this(char *win_name, char *msg, int l_flags)
 {
-	char		tmp[LOG_BUFF_SIZE];
+	size_t		msg_len;
+	t_logwin	*target;
+	char		tmp[LOG_BUFF_SIZE + 1];
+	int			i;
 
-	if (flags == LOG_F_ERR)
-		ft_sprintf(tmp, "%s%s", LOG_ERR, s);
-	else if (flags == LOG_F_WARN)
-		ft_sprintf(tmp, "%s%s", LOG_WARN, s);
-	else if (flags == LOG_F_INFO)
-		ft_sprintf(tmp, "%s%s", LOG_INFO, s);
-	else if (flags == 0)
-		ft_sprintf(tmp, "%s", s);
-	ft_putstr_fd(tmp, fd);
+	if ((target = get_logwin(win_name)) == NULL ||
+		(msg_len = ft_strlen(msg)) > LOG_BUFF_SIZE)
+	{
+		if (!target)
+			ft_dprintf(2, LOG_ERR_WINDEXIST, win_name);
+		else
+			ft_dprintf(2, LOG_ERR_MSGLONG, msg);
+		return (-1);
+	}
+	i = 0;
+	if (l_flags == LF_ERR)
+		ft_sprintf(tmp, "%s%s", LOG_ERR, msg);
+	else if (l_flags == LF_WARN)
+		ft_sprintf(tmp, "%s%s", LOG_WARN, msg);
+	else if (l_flags == LF_INFO)
+		ft_sprintf(tmp, "%s%s", LOG_INFO, msg);
+	else
+		ft_strcpy(tmp, msg);
+	ft_dprintf(target->fd, tmp);
 	return (0);
 }
 
-int			create_logfile(char *fifo, char *path)
+int				close_fdfifo(int fd, char *fifo, int w_flags)
 {
-	char	file[MAXPATHLEN];
-	char	*overwrite;
-	char	*needed;
-	int		out_fd;
+	int			ret;
 
-	ft_strcpy(file, path);
-	overwrite = ft_strrchr(file, '/') + 1;
-	ft_strcpy(overwrite, "log_files/");
-	overwrite += 10;
-	mkdir(file, 0777);
-	needed = ft_strrchr(fifo, '/') + 1;
-	ft_strcpy(overwrite, needed);
-	out_fd = open(file, O_WRONLY | O_CREAT | O_APPEND);
-	fchmod(out_fd, 0777);
-	return (out_fd);
+	ret = 0;
+	if (fd != -1)
+		ret += close(fd);
+	if (fifo)
+		ret += remove(fifo);
+	if (w_flags & WF_CLOSE)
+		kill(getppid(), SIGKILL);
+	return (ret);
 }

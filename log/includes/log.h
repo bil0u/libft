@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 19:30:45 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 22:37:03 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 
 # define SCRIPT_RPATH		"libft/log/scripts/launch_server.sh"
 # define LOG_FILE_TEMPLATE	"/tmp/libft.log.XXX"
+# define LOG_DIR			"log_files/"
 
 # define LOG_BUFF_SIZE	4096
-# define LOG_F_VERBOSE	(1 << 0)
-# define LOG_F_SAVE		(1 << 1)
-# define LOG_F_CLOSE	(1 << 2)
+
+# define WF_VERBOSE		(1 << 0)
+# define WF_SAVE		(1 << 1)
+# define WF_CLOSE		(1 << 2)
 
 # define NB_MAXWIN		5
 # define NAME_MAXLEN	32
@@ -38,7 +40,8 @@ typedef struct	s_logwin
 
 typedef struct	s_logenv
 {
-	uint8_t		nb_inst;
+	int			flags;
+	int			nb_wins;
 	t_logwin	windows[NB_MAXWIN];
 }				t_logenv;
 
@@ -46,20 +49,20 @@ typedef struct	s_logenv
 ** -- FUNCTIONS --
 */
 
-int				new_logwindow(char *name, int flags);
-int				ft_logthis(int fd, int flags, char *msg);
+int				new_logwindow(char *win_name, int w_flags);
+int				log_this(char *win_name, char *msg, int l_flags);
 
 t_logenv		*get_logenv(void);
 t_logwin		*get_logwin(char *to_find);
-int				create_logfile(char *fifo, char *path);
+int				close_fdfifo(int fd, char *fifo, int flags);
 
 /*
 ** -- GLOBAL STYLE --
 */
 
-# define LOG_F_ERR	(1)
-# define LOG_F_WARN	(2)
-# define LOG_F_INFO	(3)
+# define LF_ERR			(1)
+# define LF_WARN		(2)
+# define LF_INFO		(3)
 
 # define LOG_ERR		"{red}[ ERROR ]{eoc} "
 # define LOG_WARN		"{yellow}[ WARNING ]{eoc} "
@@ -101,8 +104,11 @@ int				create_logfile(char *fifo, char *path);
 ** -- TOOLS STYLE --
 */
 
-# define LOG_ERR_OPEN		LOG_ERR "Couldnt open fifo '%s'\n"
-# define LOG_ERR_WINEXIST	LOG_ERR "Window '%s' already exists\n"
-# define LOG_ERR_WINCRASH	LOG_ERR "Could not create window '%s'\n"
+# define LOG_ERR_OPEN		LOG_ERR "Couldnt open fifo '{cyan}%s{eoc}'\n"
+# define LOG_ERR_WINEXIST	LOG_ERR "Window '{cyan}%s{eoc}' already exists\n"
+# define LOG_ERR_WINDEXIST	LOG_ERR "Window '{cyan}%s{eoc}' does not exists\n"
+# define LOG_ERR_WINCRASH	LOG_ERR "Could not create window '{cyan}%s{eoc}'\n"
+# define LOG_ERR_MAXWINS	LOG_ERR "Maximum number of windows reached\n"
+# define LOG_ERR_MSGLONG	LOG_ERR "Message '{cyan}%10s...{eoc}' is too long\n"
 
 #endif
