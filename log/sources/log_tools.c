@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 22:38:24 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 23:01:25 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ t_logwin		*get_logwin(char *to_find)
 	t_logenv	*env;
 	uint8_t		i;
 
+	if (!to_find || !(*to_find))
+		return (NULL);
 	env = get_logenv();
 	i = 0;
 	while (i < env->nb_wins)
@@ -50,6 +52,8 @@ int				log_this(char *win_name, char *msg, int l_flags)
 	char		tmp[LOG_BUFF_SIZE + 1];
 	int			i;
 
+	if (!win_name || !(*win_name))
+		return (-1);
 	if ((target = get_logwin(win_name)) == NULL ||
 		(msg_len = ft_strlen(msg)) > LOG_BUFF_SIZE)
 	{

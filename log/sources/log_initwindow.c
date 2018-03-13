@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 22:21:35 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 23:02:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static int		init_logwindow(int w_flags, int win_no)
 {
 	char		fifo[MAXPATHLEN];
 	char		**args;
-	int			fd;
 
 	ft_strcpy(fifo, LOG_FILE_TEMPLATE);
 	ft_sprintf(ft_strchr(fifo, 'X'), "%3.3d", win_no);
@@ -85,10 +84,7 @@ static int		init_logwindow(int w_flags, int win_no)
 		exit(0);
 	}
 	wait(NULL);
-	if ((fd = open_fifotmp(fifo)) == -1)
-		return (-1);
-	ft_printf(CLIENT_CONNECTED, fifo);
-	return (fd);
+	return (open_fifotmp(fifo));
 }
 
 int				new_logwindow(char *win_name, int w_flags)
@@ -96,6 +92,8 @@ int				new_logwindow(char *win_name, int w_flags)
 	t_logenv	*env;
 	t_logwin	*win;
 
+	if (!win_name || !(*win_name))
+		return (-1);
 	env = get_logenv();
 	if ((win = get_logwin(win_name)) != NULL || env->nb_wins == NB_MAXWIN)
 	{
@@ -110,5 +108,6 @@ int				new_logwindow(char *win_name, int w_flags)
 	}
 	ft_strncpy(win->name, win_name, NAME_MAXLEN);
 	env->nb_wins++;
+	ft_printf(CLIENT_CONNECTED, win_name);
 	return (win->fd);
 }

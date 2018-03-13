@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 22:37:03 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 22:51:01 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,18 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 ** -- SERVER STYLE --
 */
 
-# define SERV_INIT1		"{blue}Connection started by client\n"
-# define SERV_INIT2		"Server initialisation...\n{eoc}"
-# define SERV_INIT		SERV_INIT1 SERV_INIT2
+# define SERV_INIT		"{blue}Connection started by client{eoc}\n"
 
-# define SERV_WELCOME1	"{yellow}[ Awesome logging tool v0.1 by"
+# define SERV_WELCOME1	"{yellow}[ Awesome logging tool v1.0 by"
 # define SERV_WELCOME2	" {cyan}upopee{yellow} ]{eoc}\n{green}"
 # define SERV_WELCOME3	"[ Listening on --> '{cyan}%s{green}' ]{eoc}\n"
 # define SERV_WELCOME	SERV_WELCOME1 SERV_WELCOME2 SERV_WELCOME3
 
-# define SERV_GDBYE1	"\n{red}[ Closing connection with '{cyan}%s{red}' ]"
-# define SERV_GDBYE2	"{eoc}\n{magenta}[ {blue}#   {cyan}G {green}O "
+# define SERV_GDBYE1	"{red}[ Closing connection with '{cyan}%s{red}' ]\n"
+# define SERV_GDBYE2	"{magenta}[ {blue}#   {cyan}G {green}O "
 # define SERV_GDBYE3	"{yellow}O {red}D   {magenta}B {blue}Y {cyan}E   "
 # define SERV_GDBYE4	"{green}# {yellow} ]{eoc}\n"
-# define SERV_GOODBYE	SERV_GDBYE1 SERV_GDBYE2 SERV_GDBYE3 SERV_GDBYE4
+# define SERV_GOODBYE	"\n" SERV_GDBYE1 SERV_GDBYE2 SERV_GDBYE3 SERV_GDBYE4
 
 # define SERV_NOPARAM	LOG_ERR "no parameter given\n"
 # define SERV_BADPARAM	LOG_ERR "{yellow}%d{eoc} parameters given\n"
@@ -96,9 +94,8 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 
 # define CLIENT_PROMPT		"{magenta}Your message here >{eoc} "
 
-# define CLIENT_CONNECTED1	"{green}[ Log window created, listening on"
-# define CLIENT_CONNECTED2	" '{cyan}%s{green}' ]{eoc}\n"
-# define CLIENT_CONNECTED	CLIENT_CONNECTED1 CLIENT_CONNECTED2
+# define CLIENT_CONNECTED1	"Window '{cyan}%s{eoc}' created, listening...\n"
+# define CLIENT_CONNECTED	LOG_INFO CLIENT_CONNECTED1
 
 /*
 ** -- TOOLS STYLE --
