@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 15:49:40 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 18:46:03 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int			ft_logthis(int fd, int flags, char *s)
 		ft_sprintf(tmp, "%s%s", LOG_INFO, s);
 	else if (flags == 0)
 		ft_sprintf(tmp, "%s", s);
-	ft_dprintf(fd, tmp);
+	ft_putstr_fd(tmp, fd);
 	return (0);
 }
 

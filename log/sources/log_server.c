@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 15:50:12 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 18:48:18 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 		{
 			if (argv[argc][i] == 'v')
 				*s_flags |= LOG_F_VERBOSE;
-			else if (argv[argc][i] == 'n')
-				*s_flags |= LOG_F_NONEWLINE;
 			else if (argv[argc][i] == 's')
 				*s_flags |= LOG_F_SAVE;
 			else if (argv[argc][i] == 'c')
@@ -49,7 +47,7 @@ static int		get_tokens(int argc, char **argv, char **fifo, int *s_flags)
 
 static int		decode_params(int argc, char **argv, char **fifo, int *s_flags)
 {
-	*s_flags = LOG_F_NONE;
+	*s_flags = 0;
 	if (argc == 1 || ft_strequ(argv[1], ""))
 	{
 		ft_dprintf(STDERR_FILENO, SERV_NOPARAM);
@@ -74,16 +72,9 @@ static void		main_loop(int in_fd, int out_fd, int s_flags)
 			break ;
 		else if (ft_strcmp("", buff) != 0)
 		{
-			if (s_flags & LOG_F_NONEWLINE)
-			{
-				ft_putstr(buff);
-				s_flags & LOG_F_SAVE ? ft_putstr_fd(buff, out_fd) : (void)buff;
-			}
-			else
-			{
-				ft_putendl(buff);
-				s_flags & LOG_F_SAVE ? ft_putendl_fd(buff, out_fd) : (void)buff;
-			}
+			ft_putstr(buff);
+			if (s_flags & LOG_F_SAVE)
+				ft_putstr_fd(buff, out_fd);
 		}
 	}
 	if (s_flags & LOG_F_SAVE)
@@ -96,16 +87,7 @@ static int		close_fifo(int fd, char *fifo, int flags)
 
 	ret = 0;
 	if (fd != -1)
-	{
 		ret += close(fd);
-		if (flags & LOG_F_VERBOSE)
-		{
-			if (ret)
-				ft_dprintf(2, LOG_ERR_CLOSE, fifo, fd);
-			else
-				ft_printf(CLIENT_CLOSING, fifo);
-		}
-	}
 	if (fifo)
 		ret += remove(fifo);
 	if (flags & LOG_F_CLOSE)
@@ -120,9 +102,10 @@ int				main(int argc, char **argv)
 	char		*fifo;
 	int			s_flags;
 
-	ft_printf(SERV_INIT);
 	if (decode_params(argc, argv, &fifo, &s_flags) == -1)
 		return (-1);
+	if (s_flags & LOG_F_VERBOSE)
+		ft_printf(SERV_INIT);
 	if (access(fifo, F_OK) < 0)
 		mkfifo(fifo, 0777);
 	if ((in_fd = open(fifo, O_RDONLY | O_NONBLOCK)) == -1)

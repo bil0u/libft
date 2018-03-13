@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/09 07:49:40 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 17:24:44 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 
 static int		check_params(int argc)
 {
-	argc == 1 ? ft_dprintf(2, SERV_NOPARAM) : (void)argc;
-	argc > 2 ? ft_dprintf(2, SERV_BADPARAM, argc - 1) : (void)argc;
-	if (argc != 2)
-		return (-1);
-	return (0);
+	if (argc == 1)
+		ft_putstr_fd(SERV_NOPARAM, 2);
+	else if (argc > 2)
+		ft_dprintf(2, SERV_BADPARAM, argc - 1);
+	return (argc == 2 ? 0 : -1);
 }
 
 static void		main_loop(int fd)
@@ -36,7 +36,7 @@ static void		main_loop(int fd)
 	buff = NULL;
 	while (1)
 	{
-		ft_printf(CLIENT_PROMPT);
+		ft_putstr(CLIENT_PROMPT);
 		if (!get_next_line(STDIN_FILENO, &buff)
 			|| ft_strequ("exit", buff))
 			break ;

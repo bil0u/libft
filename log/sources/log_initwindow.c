@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 15:53:56 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 18:47:28 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,13 @@ static char		**gen_execve_args(char *fifo, int flags)
 		ft_strcpy(overwrite, " -o -");
 		i = 5;
 		flags & LOG_F_VERBOSE ? overwrite[i++] = 'v' : (void)i;
-		flags & LOG_F_NONEWLINE ? overwrite[i++] = 'n' : (void)i;
 		flags & LOG_F_SAVE ? overwrite[i++] = 's' : (void)i;
 		flags & LOG_F_CLOSE ? overwrite[i++] = 'c' : (void)i;
 	}
 	return (ft_strsplit(to_split, ' '));
 }
 
-int				init_logwindow(int flags)
+static int		init_logwindow(int flags)
 {
 	static int	nb_inst = 0;
 	char		fifo[MAXPATHLEN];
@@ -93,4 +92,10 @@ int				init_logwindow(int flags)
 	if (flags & LOG_F_VERBOSE)
 		ft_printf(CLIENT_CONNECTED, fifo);
 	return (fd);
+}
+
+int				new_logwindow(char *name, int flags)
+{
+	(void)name;
+	return (init_logwindow(flags));
 }
