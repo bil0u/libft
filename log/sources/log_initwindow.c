@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 18:47:28 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 19:31:52 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,14 @@ static char		**gen_execve_args(char *fifo, int flags)
 	return (ft_strsplit(to_split, ' '));
 }
 
-static int		init_logwindow(int flags)
+static int		init_logwindow(int flags, uint8_t win_no)
 {
-	static int	nb_inst = 0;
 	char		fifo[MAXPATHLEN];
 	char		**args;
 	int			fd;
 
 	ft_strcpy(fifo, LOG_FILE_TEMPLATE);
-	ft_sprintf(ft_strchr(fifo, 'X'), "%3.3hhu", nb_inst + 1);
+	ft_sprintf(ft_strchr(fifo, 'X'), "%3.3hhu", win_no);
 	if (fork() == 0)
 	{
 		args = gen_execve_args(fifo, flags);
@@ -88,14 +87,28 @@ static int		init_logwindow(int flags)
 	wait(NULL);
 	if ((fd = open_fifotmp(fifo)) == -1)
 		return (-1);
-	++nb_inst;
-	if (flags & LOG_F_VERBOSE)
-		ft_printf(CLIENT_CONNECTED, fifo);
+	ft_printf(CLIENT_CONNECTED, fifo);
 	return (fd);
 }
 
 int				new_logwindow(char *name, int flags)
 {
-	(void)name;
-	return (init_logwindow(flags));
+	t_logenv	*env;
+	t_logwin	*win;
+
+	if (get_logwin(name) != NULL)
+	{
+		ft_dprintf(2, LOG_ERR_WINEXIST, name);
+		return (-1);
+	}
+	env = get_logenv();
+	win = &(env->windows[env->nb_inst]);
+	if ((win->fd = init_logwindow(flags, env->nb_inst + 1)) == -1)
+		ft_dprintf(2, LOG_ERR_WINCRASH, name);
+	else
+	{
+		env->nb_inst++;
+		ft_strncpy(win->name, name, NAME_MAXLEN);
+	}
+	return (win->fd);
 }

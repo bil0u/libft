@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 18:46:03 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/13 19:30:40 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,29 @@
 #include "memory.h"
 #include "strings.h"
 #include "log.h"
+
+t_logenv	*get_logenv(void)
+{
+	static t_logenv		env;
+
+	return (&env);
+}
+
+t_logwin	*get_logwin(char *to_find)
+{
+	t_logenv	*env;
+	uint8_t		i;
+
+	env = get_logenv();
+	i = 0;
+	while (i < env->nb_inst)
+	{
+		if (ft_strequ(env->windows[i].name, to_find))
+			return (&(env->windows[i]));
+		++i;
+	}
+	return (NULL);
+}
 
 int			ft_logthis(int fd, int flags, char *s)
 {
