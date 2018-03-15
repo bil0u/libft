@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 23:02:14 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/15 15:45:55 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		open_fifotmp(char *fifo)
 		mkfifo(fifo, 0777);
 	if ((fd = open(fifo, O_WRONLY)) == -1)
 	{
-		ft_dprintf(2, LOG_ERR_OPEN, fifo);
+		ft_dprintf(STDERR_FILENO, LOG_ERR_OPEN, fifo);
 		return (-1);
 	}
 	return (fd);
@@ -97,13 +97,14 @@ int				new_logwindow(char *win_name, int w_flags)
 	env = get_logenv();
 	if ((win = get_logwin(win_name)) != NULL || env->nb_wins == NB_MAXWIN)
 	{
-		ft_dprintf(2, (win ? LOG_ERR_WINEXIST : LOG_ERR_MAXWINS), win_name);
+		ft_dprintf(STDERR_FILENO, (win ? LOG_ERR_WINEXIST : LOG_ERR_MAXWINS),
+					win_name);
 		return (-1);
 	}
 	win = &(env->windows[env->nb_wins]);
 	if ((win->fd = init_logwindow(w_flags, env->nb_wins + 1)) == -1)
 	{
-		ft_dprintf(2, LOG_ERR_WINCRASH, win_name);
+		ft_dprintf(STDERR_FILENO, LOG_ERR_WINCRASH, win_name);
 		return (-1);
 	}
 	ft_strncpy(win->name, win_name, NAME_MAXLEN);

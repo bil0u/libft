@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 22:36:07 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/15 15:44:37 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,15 @@ static int		check_args(int argc, char **argv, char **fifo, int *s_flags)
 
 static void		main_loop(int in_fd, int out_fd)
 {
-	char		buff[LOG_BUFF_SIZE];
+	char		buff[LOG_BUFF_SIZE + 1];
+	int			bytes_read;
 
-	while (42)
+	while ((bytes_read = read(in_fd, buff, LOG_BUFF_SIZE)) != 0)
 	{
-		ft_bzero(buff, LOG_BUFF_SIZE);
-		if (!read(in_fd, buff, LOG_BUFF_SIZE))
-			break ;
-		else if (ft_strcmp("", buff) != 0)
-		{
-			ft_putstr(buff);
-			if (out_fd != -1)
-				ft_putstr_fd(buff, out_fd);
-		}
+		buff[bytes_read] = '\0';
+		write(STDIN_FILENO, buff, bytes_read);
+		if (out_fd != -1)
+			write(out_fd, buff, bytes_read);
 	}
 	if (out_fd != -1)
 		close(out_fd);
@@ -115,7 +111,7 @@ int				main(int argc, char **argv)
 		mkfifo(fifo, 0777);
 	if ((in_fd = open(fifo, O_RDONLY | O_NONBLOCK)) == -1)
 	{
-		ft_dprintf(2, LOG_ERR_OPEN, argv[1]);
+		ft_dprintf(STDERR_FILENO, LOG_ERR_OPEN, argv[1]);
 		close_fdfifo(in_fd, fifo, s_flags);
 		return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:29:43 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/14 04:09:42 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/15 15:45:09 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int				log_this(char *win_name, char *msg, int l_flags)
 		(msg_len = ft_strlen(msg)) > LOG_BUFF_SIZE)
 	{
 		if (!target)
-			ft_dprintf(2, LOG_ERR_WINDEXIST, win_name);
+			ft_dprintf(STDERR_FILENO, LOG_ERR_WINDEXIST, win_name);
 		else
-			ft_dprintf(2, LOG_ERR_MSGLONG, msg);
+			ft_dprintf(STDERR_FILENO, LOG_ERR_MSGLONG, msg);
 		return (-1);
 	}
 	if (l_flags == LF_ERR)
