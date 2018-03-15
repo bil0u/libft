@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/15 15:44:37 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/15 15:59:30 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void		main_loop(int in_fd, int out_fd)
 	}
 	if (out_fd != -1)
 		close(out_fd);
+	write(STDIN_FILENO, "\n", 1);
 }
 
 static int		create_logfile(char *fifo, char *path)

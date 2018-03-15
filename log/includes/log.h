@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/13 22:51:01 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/15 15:59:45 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 # define SERV_GDBYE2	"{magenta}[ {blue}#   {cyan}G {green}O "
 # define SERV_GDBYE3	"{yellow}O {red}D   {magenta}B {blue}Y {cyan}E   "
 # define SERV_GDBYE4	"{green}# {yellow} ]{eoc}\n"
-# define SERV_GOODBYE	"\n" SERV_GDBYE1 SERV_GDBYE2 SERV_GDBYE3 SERV_GDBYE4
+# define SERV_GOODBYE	SERV_GDBYE1 SERV_GDBYE2 SERV_GDBYE3 SERV_GDBYE4
 
 # define SERV_NOPARAM	LOG_ERR "no parameter given\n"
 # define SERV_BADPARAM	LOG_ERR "{yellow}%d{eoc} parameters given\n"
