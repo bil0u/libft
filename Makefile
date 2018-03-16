@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/13 14:23:22 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/16 06:58:49 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME =				libft.a
 CC =				gcc
-CFLAGS =			-Wall -Werror -Wextra -g
+CFLAGS =			-Wall -Werror -Wextra
 CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
 					-I $(CHAR_DIR)/$(INC_DIR) \
 					-I $(STR_DIR)/$(INC_DIR) \
@@ -179,6 +179,7 @@ MATH_FILES =		ft_atoi \
 FT_PRINTF_DIR =		ft_printf
 FT_PRINTF_SRC =		$(patsubst %,$(FT_PRINTF_DIR)/$(SRC_DIR)/%,$(FT_PRINTF_FILES:=.c))
 FT_PRINTF_FILES =	ft_printf \
+					ft_vprintf \
 					vararg_utils \
 					handle_utils \
 					numbers_utils \
@@ -263,7 +264,7 @@ LOG_SERVER =		log_server
 LOG_CLIENT =		log_client
 LOG_FILES =			log_initwindow \
 					log_tools \
-
+					log_functions \
 
 # -- IMPLICIT RULES  / LINKING --
 

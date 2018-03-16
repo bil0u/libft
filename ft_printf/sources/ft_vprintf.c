@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_vprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/12 13:01:46 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/16 02:38:37 by upopee           ###   ########.fr       */
+/*   Created: 2018/03/16 02:24:21 by upopee            #+#    #+#             */
+/*   Updated: 2018/03/16 02:38:41 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "memory.h"
 #include "strings.h"
 
-int		ft_printf(const char *format, ...)
+int		ft_vprintf(const char *format, va_list ap)
 {
 	char		*str;
 	t_env		e;
@@ -26,7 +26,7 @@ int		ft_printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 	ft_bzero(&e, sizeof(e));
-	va_start(args, format);
+	va_copy(args, ap);
 	e.format = (char *)format;
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
@@ -42,7 +42,7 @@ int		ft_printf(const char *format, ...)
 	return (e.ret);
 }
 
-int		ft_dprintf(int fd, const char *format, ...)
+int		ft_vdprintf(int fd, const char *format, va_list ap)
 {
 	char		*str;
 	t_env		e;
@@ -51,7 +51,7 @@ int		ft_dprintf(int fd, const char *format, ...)
 	if (fd < 1 || format == NULL)
 		return (-1);
 	ft_bzero(&e, sizeof(e));
-	va_start(args, format);
+	va_copy(args, ap);
 	e.format = (char *)format;
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
@@ -67,7 +67,7 @@ int		ft_dprintf(int fd, const char *format, ...)
 	return (e.ret);
 }
 
-int		ft_sprintf(char *str, const char *format, ...)
+int		ft_vsprintf(char *str, const char *format, va_list ap)
 {
 	t_env		e;
 	va_list		args;
@@ -75,7 +75,7 @@ int		ft_sprintf(char *str, const char *format, ...)
 	if (format == NULL || str == NULL)
 		return (-1);
 	ft_bzero(&e, sizeof(e));
-	va_start(args, format);
+	va_copy(args, ap);
 	e.format = (char *)format;
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
@@ -86,7 +86,7 @@ int		ft_sprintf(char *str, const char *format, ...)
 	return (e.ret);
 }
 
-int		ft_asprintf(char **ret, const char *format, ...)
+int		ft_vasprintf(char **ret, const char *format, va_list ap)
 {
 	t_env		e;
 	va_list		args;
@@ -95,7 +95,7 @@ int		ft_asprintf(char **ret, const char *format, ...)
 	if (format == NULL || ret == NULL)
 		return (-1);
 	ft_bzero(&e, sizeof(e));
-	va_start(args, format);
+	va_copy(args, ap);
 	e.format = (char *)format;
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)

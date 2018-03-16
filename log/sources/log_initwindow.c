@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/15 15:45:55 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/16 06:48:46 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,6 @@
 #include "ft_printf.h"
 #include "log.h"
 
-static int		open_fifotmp(char *fifo)
-{
-	int		fd;
-
-	if (access(fifo, F_OK) < 0)
-		mkfifo(fifo, 0777);
-	if ((fd = open(fifo, O_WRONLY)) == -1)
-	{
-		ft_dprintf(STDERR_FILENO, LOG_ERR_OPEN, fifo);
-		return (-1);
-	}
-	return (fd);
-}
 
 static void		get_serv_path(char *buff)
 {
@@ -65,26 +52,38 @@ static char		**gen_execve_args(char *fifo, int w_flags)
 		w_flags & WF_VERBOSE ? overwrite[i++] = 'v' : (void)i;
 		w_flags & WF_SAVE ? overwrite[i++] = 's' : (void)i;
 		w_flags & WF_CLOSE ? overwrite[i++] = 'c' : (void)i;
+		w_flags & WF_KEEP ? overwrite[i++] = 'l' : (void)i;
 	}
 	return (ft_strsplit(to_split, ' '));
 }
 
-static int		init_logwindow(int w_flags, int win_no)
+static int		init_logwindow(char *win_name, int w_flags)
 {
 	char		fifo[MAXPATHLEN];
 	char		**args;
+	int			fd;
 
 	ft_strcpy(fifo, LOG_FILE_TEMPLATE);
-	ft_sprintf(ft_strchr(fifo, 'X'), "%3.3d", win_no);
+	ft_sprintf(ft_strchr(fifo, 'X'), "%s", win_name);
 	if (fork() == 0)
 	{
-		args = gen_execve_args(fifo, w_flags);
-		execv(args[0], args);
-		ft_tabstrdel(&args);
+		if (access(fifo, F_OK) < 0)
+		{
+			mkfifo(fifo, 0777);
+			args = gen_execve_args(fifo, w_flags);
+			execv(args[0], args);
+			ft_tabstrdel(&args);
+		}
+		else
+		{
+			fd = open(fifo, O_WRONLY);
+			ft_dprintf(fd, CLEAR_SCR SERV_RESTORING);
+			close(fd);
+		}
 		exit(0);
 	}
 	wait(NULL);
-	return (open_fifotmp(fifo));
+	return (open(fifo, O_WRONLY));
 }
 
 int				new_logwindow(char *win_name, int w_flags)
@@ -102,7 +101,7 @@ int				new_logwindow(char *win_name, int w_flags)
 		return (-1);
 	}
 	win = &(env->windows[env->nb_wins]);
-	if ((win->fd = init_logwindow(w_flags, env->nb_wins + 1)) == -1)
+	if ((win->fd = init_logwindow(win_name, w_flags)) == -1)
 	{
 		ft_dprintf(STDERR_FILENO, LOG_ERR_WINCRASH, win_name);
 		return (-1);

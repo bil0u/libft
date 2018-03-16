@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/15 15:59:45 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/16 06:48:16 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@
 # include "../../linked_lists/includes/linked_lists.h"
 
 # define SCRIPT_RPATH		"libft/log/scripts/launch_server.sh"
-# define LOG_FILE_TEMPLATE	"/tmp/libft.log.XXX"
+# define LOG_FILE_TEMPLATE	"/tmp/libft_log.X"
 # define LOG_DIR			"log_files/"
+# define LOG_EXT			".txt"
 
 # define LOG_BUFF_SIZE	4096
 
 # define WF_VERBOSE		(1 << 0)
 # define WF_SAVE		(1 << 1)
 # define WF_CLOSE		(1 << 2)
+# define WF_KEEP		(1 << 3)
 
 # define NB_MAXWIN		5
 # define NAME_MAXLEN	32
@@ -50,10 +52,12 @@ typedef struct	s_logenv
 */
 
 int				new_logwindow(char *win_name, int w_flags);
-int				log_this(char *win_name, char *msg, int l_flags);
+int				log_this(char *win_name, int l_flags, char *msg, ...);
 
 t_logenv		*get_logenv(void);
 t_logwin		*get_logwin(char *to_find);
+int				get_winfd(char *to_find);
+int				create_logfile(char *fifo, char *path);
 int				close_fdfifo(int fd, char *fifo, int flags);
 
 /*
@@ -63,6 +67,8 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 # define LF_ERR			(1)
 # define LF_WARN		(2)
 # define LF_INFO		(3)
+
+# define CLEAR_SCR		"\e[1;1H\e[2J"
 
 # define LOG_ERR		"{red}[ ERROR ]{eoc} "
 # define LOG_WARN		"{yellow}[ WARNING ]{eoc} "
@@ -87,6 +93,8 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 
 # define SERV_NOPARAM	LOG_ERR "no parameter given\n"
 # define SERV_BADPARAM	LOG_ERR "{yellow}%d{eoc} parameters given\n"
+
+# define SERV_RESTORING	"\033c" LOG_INFO "Restoring session\n\n"
 
 /*
 ** -- CLIENT STYLE --
