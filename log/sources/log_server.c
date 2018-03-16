@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/16 06:48:22 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/16 16:52:42 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ static void		main_loop(int s_flags, int in_fd, int out_fd)
 			if (out_fd != -1)
 				write(out_fd, buff, bytes_read);
 		}
+		else
+			sleep(1);
 	}
 	if (out_fd != -1)
 		close(out_fd);
@@ -107,7 +109,7 @@ int				main(int argc, char **argv)
 		return (-1);
 	if (s_flags & WF_VERBOSE)
 		ft_printf(SERV_INIT);
-	if ((in_fd = open(fifo, O_RDONLY | O_NONBLOCK)) == -1)
+	if ((in_fd = open(fifo, O_RDONLY)) == -1)
 	{
 		ft_dprintf(STDERR_FILENO, LOG_ERR_OPEN, argv[1]);
 		close_fdfifo(in_fd, fifo, s_flags);
