@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/16 07:09:26 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/19 19:53:16 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 # define LOG_EXT			".txt"
 
 # define LOG_BUFF_SIZE	4096
+
+/*
+** NOTE THAT FLAGS APPLY IF THE WINDOW IS NOT OPEN WHILE THE
+** 'new_logwindow' FUNCTION IS CALLED
+** ----------------------------------------------------------
+** WF_VERBOSE ->	Show error messages if there are any
+** WF_SAVE	  ->	Save output of the session(s) in a log file
+** WF_CLOSE	  ->	Close the window at the end of the session
+** WF_KEEP	  ->	Keep instance running and listening on the fifo when
+**					session is closed. The window will refresh if a client
+**					connects again
+*/
 
 # define WF_VERBOSE		(1 << 0)
 # define WF_SAVE		(1 << 1)
