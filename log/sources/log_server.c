@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/19 19:52:00 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/20 15:53:16 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,10 @@ static int		check_args(int argc, char **argv, char **fifo, int *s_flags)
 	return (0);
 }
 
-void			sigint_handler(int trash)
+void			sigint_handler(int sig)
 {
-	(void)trash;
 	g_break = 1;
-	signal(SIGINT, SIG_DFL);
+	signal(sig, SIG_DFL);
 }
 
 static void		main_loop(int s_flags, int in_fd, int out_fd)

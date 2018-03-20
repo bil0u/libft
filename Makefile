@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/16 06:58:49 by upopee           ###   ########.fr        #
+#    Updated: 2018/03/20 15:56:47 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -264,6 +264,7 @@ LOG_SERVER =		log_server
 LOG_CLIENT =		log_client
 LOG_FILES =			log_initwindow \
 					log_tools \
+					log_tools2 \
 					log_functions \
 
 # -- IMPLICIT RULES  / LINKING --
@@ -286,15 +287,15 @@ all:
 
 $(NAME): $(OBJ_DIR) $(LIBFT_OBJS)
 	@$(AR) $(NAME) $(LIBFT_OBJS)
-	@printf "\r$(ERASELN)> $(YELLOW)$(NAME)$(EOC) : Library created\t$(GREEN_B)✓$(EOC)\n"
+	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(NAME)$(EOC) : Library created\n"
 
 $(LOG_SERVER): $(OBJ_DIR) $(LOGSERV_OBJS)
 	@$(CC) -o $@ $(LOGSERV_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS)
-	@printf "\r$(ERASELN)> $(YELLOW)$(LOG_SERVER)$(EOC) : Binary created\t$(GREEN_B)✓$(EOC)\n"
+	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(LOG_SERVER)$(EOC) : Binary created\n"
 
 $(LOG_CLIENT): $(OBJ_DIR) $(LOGCLT_OBJS)
 	@$(CC) -o $@ $(LOGCLT_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS)
-	@printf "\r$(ERASELN)> $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary created\t$(GREEN_B)✓$(EOC)\n"
+	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary created\n"
 
 $(OBJ_DIR):
 	@$(MKDIR) $(OBJ_DIR)
@@ -303,31 +304,31 @@ clean:
 	@if [ -e $(OBJ_DIR) ]; \
 	then \
 		$(RMDIR) $(OBJ_DIR); \
-		printf "> $(YELLOW)libft$(EOC) : Objects deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)libft$(EOC) : Objects deleted\n"; \
 	fi;
 
 cleanlogs:
 	@if [ -e $(LOGS_DIR) ]; \
 	then \
 		$(RMDIR) $(LOGS_DIR); \
-		printf "> $(YELLOW)$(NAME)$(EOC) : Logs deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)$(NAME)$(EOC) : Logs deleted\n"; \
 	fi;
 
 fclean: clean
 	@if [ -e $(NAME) ]; \
 	then \
 		$(RM) $(NAME); \
-		printf "> $(YELLOW)$(NAME)$(EOC) : Library deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)$(NAME)$(EOC) : Library deleted\n"; \
 	fi;
 	@if [ -e $(LOG_SERVER) ]; \
 	then \
 		$(RM) $(LOG_SERVER); \
-		printf "> $(YELLOW)$(LOG_SERVER)$(EOC) : Binary deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)$(LOG_SERVER)$(EOC) : Binary deleted\n"; \
 	fi
 	@if [ -e $(LOG_CLIENT) ]; \
 	then \
 		$(RM) $(LOG_CLIENT); \
-		printf "> $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary deleted\t$(RED_B)✗$(EOC)\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary deleted\n"; \
 	fi
 
 re: fclean

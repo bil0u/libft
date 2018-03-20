@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/19 19:52:04 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/20 15:34:35 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <sys/param.h>
 #include "strings.h"
 #include "memory.h"
+#include "read_write.h"
 #include "ft_printf.h"
 #include "log.h"
-
 
 static void		get_serv_path(char *buff)
 {
@@ -67,9 +67,8 @@ static int		init_logwindow(char *win_name, int w_flags)
 	ft_sprintf(ft_strchr(fifo, 'X'), "%s", win_name);
 	if (fork() == 0)
 	{
-		if (access(fifo, F_OK) < 0)
+		if (access(fifo, F_OK) < 0 && mkfifo(fifo, 0777) == 0)
 		{
-			mkfifo(fifo, 0777);
 			args = gen_execve_args(fifo, w_flags);
 			execv(args[0], args);
 			ft_tabstrdel(&args);
@@ -77,7 +76,8 @@ static int		init_logwindow(char *win_name, int w_flags)
 		else
 		{
 			fd = open(fifo, O_WRONLY);
-			ft_dprintf(fd, CLEAR_SCR SERV_RESTORING);
+			ft_putstr_fd(CLEAR_SCR, fd);
+			w_flags & WF_VERBOSE ? ft_dprintf(fd, SERV_RESTORING) : (void)0;
 			close(fd);
 		}
 		exit(0);

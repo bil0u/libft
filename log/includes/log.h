@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/19 19:53:16 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/20 13:48:38 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct	s_logenv
 
 int				new_logwindow(char *win_name, int w_flags);
 int				log_this(char *win_name, int l_flags, char *msg, ...);
+void			clear_window(char *win_name);
 
 t_logenv		*get_logenv(void);
 t_logwin		*get_logwin(char *to_find);

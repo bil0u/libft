@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/12 13:01:46 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/16 02:38:37 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/20 15:38:04 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		ft_printf(const char *format, ...)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		str = ft_strnew(e.ret);
+		str = ft_strnew(e.ret + 1);
 		lstcpy_to_str(e.list, str);
 		write(STDIN_FILENO, str, e.ret);
 		ft_strdel(&str);
@@ -56,7 +56,7 @@ int		ft_dprintf(int fd, const char *format, ...)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		str = ft_strnew(e.ret);
+		str = ft_strnew(e.ret + 1);
 		lstcpy_to_str(e.list, str);
 		write(fd, str, e.ret);
 		ft_strdel(&str);
@@ -100,7 +100,7 @@ int		ft_asprintf(char **ret, const char *format, ...)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		dst = ft_strnew(e.ret);
+		dst = ft_strnew(e.ret + 1);
 		lstcpy_to_str(e.list, dst);
 		*ret = dst;
 	}

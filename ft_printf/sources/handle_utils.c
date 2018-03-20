@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/19 02:24:04 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:19:24 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/20 15:41:28 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	lstcpy_to_str(t_list *list, char *str)
 		str += list->content_size;
 		list = list->next;
 	}
+	str[0] = '\0';
 }
 
 void	cpy_to_lst(t_env *e, char *str, size_t len)
