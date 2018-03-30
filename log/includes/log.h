@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/20 13:48:38 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/30 19:17:53 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 
 # define CLIENT_PROMPT		"{magenta}Your message here >{eoc} "
 
-# define CLIENT_CONNECTED1	"Opened connection with '{green}%s{eoc}' window\n"
+# define CLIENT_CONNECTED1	"Connection with '{green}%s{eoc}' etablished\n"
 # define CLIENT_CONNECTED	LOG_INFO CLIENT_CONNECTED1
 
 /*

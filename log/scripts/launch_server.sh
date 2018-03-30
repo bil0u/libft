@@ -21,7 +21,7 @@ EXEC='\/log_server'
 RUN_CMD=$(echo $0 | sed "s/$SCRIPTPATH/$EXEC/")
 
 exec osascript <<END
-tell application "iTerm"
+tell application "iTerm2"
 	set currWin to (create window with default profile)
 	tell current session of currWin
 		write text "$RUN_CMD $FILE $OPTIONS"

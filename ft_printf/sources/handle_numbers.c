@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 18:39:10 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/15 18:00:02 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/30 21:44:52 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,13 @@ int		spec_binary(t_env *e, va_list *args, t_conv *c)
 
 	ft_bzero(&m, sizeof(m));
 	m.base = BASE_2;
-	tmp = get_vararg_signed(c, args);
-	if (tmp < 0)
-		c->prefix = "-";
+	tmp = get_vararg_unsigned(c, args);
+	if (c->alt)
+		c->prefix = "0b";
 	nbr = ft_abs(tmp);
 	init_mod_nbr(c, &m, nbr);
 	apply_parsing_nbr(c, &m);
 	str = utoa_base_prec(nbr, &m, m.a_len);
-	if (c->alt)
-		str = add_prefix(str, "0b", m.a_len, 2);
 	str = add_prefix(str, c->prefix, ft_strlen(str), m.p_len);
 	str_to_lst(e, str, c, &m);
 	ft_strdel(&str);

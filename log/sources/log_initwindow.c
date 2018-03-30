@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 16:08:53 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/20 15:34:35 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/30 19:16:30 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int				new_logwindow(char *win_name, int w_flags)
 	}
 	ft_strncpy(win->name, win_name, NAME_MAXLEN);
 	env->nb_wins++;
-	ft_printf(CLIENT_CONNECTED, win_name);
+	if (w_flags & WF_VERBOSE)
+		ft_printf(CLIENT_CONNECTED, win_name);
 	return (win->fd);
 }
