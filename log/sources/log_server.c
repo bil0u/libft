@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:53:45 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/20 15:53:16 by upopee           ###   ########.fr       */
+/*   Updated: 2018/03/31 14:49:32 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int		check_args(int argc, char **argv, char **fifo, int *s_flags)
 	return (0);
 }
 
-void			sigint_handler(int sig)
+static void		signal_handler(int sig)
 {
 	g_break = 1;
 	signal(sig, SIG_DFL);
@@ -76,7 +76,8 @@ static void		main_loop(int s_flags, int in_fd, int out_fd)
 	int			bytes_read;
 
 	g_break = 0;
-	signal(SIGINT, &sigint_handler);
+	signal(SIGINT, &signal_handler);
+	signal(SIGHUP, &signal_handler);
 	while ((bytes_read = read(in_fd, buff, LOG_BUFF_SIZE)) != 0
 		|| (s_flags & WF_KEEP))
 	{
