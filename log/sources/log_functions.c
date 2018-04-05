@@ -6,11 +6,12 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 04:49:59 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/30 18:48:39 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/05 10:11:14 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
+#include "../../libft.h"
 #include "ft_printf.h"
 #include "strings.h"
 #include "log.h"
@@ -38,5 +39,5 @@ int				log_this(char *win_name, int l_flags, char *msg, ...)
 	va_start(args, msg);
 	ft_vdprintf(fd, tmp, args);
 	va_end(args);
-	return (0);
+	return (l_flags & LF_ERR ? FAILURE : SUCCESS);
 }
