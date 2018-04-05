@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/03/20 15:56:47 by upopee           ###   ########.fr        #
+#    Updated: 2018/04/05 18:36:25 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME =				libft.a
 CC =				gcc
-CFLAGS =			-Wall -Werror -Wextra
+CFLAGS =			-Wall -Werror -Wextra -g
 CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
 					-I $(CHAR_DIR)/$(INC_DIR) \
 					-I $(STR_DIR)/$(INC_DIR) \
