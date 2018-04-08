@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/17 23:31:28 by upopee            #+#    #+#             */
-/*   Updated: 2018/03/06 17:07:05 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/08 09:20:44 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_lstdelif(t_list **alst, void *ref,
 		{
 			if ((*cmp)(item->content, ref) == 0)
 			{
-				if (prev)
+				if (prev != NULL)
 					prev->next = item->next;
 				else
 					*alst = item->next;
