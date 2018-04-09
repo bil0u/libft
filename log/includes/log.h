@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/08 03:46:42 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/09 08:26:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct	s_logenv
 
 int				new_logwindow(char *win_name, int w_flags);
 int				log_this(char *win_name, int l_flags, char *msg, ...);
+int				vlog_this(char *win_name, int l_flags, char *msg, va_list ap);
 void			clear_window(char *win_name);
 
 t_logenv		*get_logenv(void);
@@ -77,9 +78,12 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 ** -- GLOBAL STYLE --
 */
 
-# define LF_ERR			(1)
-# define LF_WARN		(2)
-# define LF_INFO		(3)
+# define LF_ERR			(1 << 0)
+# define LF_WARN		(1 << 1)
+# define LF_INFO		(1 << 2)
+# define LF_STDO		(1 << 3)
+# define LF_BOTH		(1 << 4)
+# define LF_NONE		(1 << 5)
 
 # define CLEAR_SCR		"\e[1;1H\e[2J"
 
