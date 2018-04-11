@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/09 08:26:27 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/11 16:55:32 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LOG_H
 
 # include <unistd.h>
+# include <stdarg.h>
 # include <fcntl.h>
 # include <inttypes.h>
 # include <sys/param.h>
@@ -81,6 +82,7 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 # define LF_ERR			(1 << 0)
 # define LF_WARN		(1 << 1)
 # define LF_INFO		(1 << 2)
+
 # define LF_STDO		(1 << 3)
 # define LF_BOTH		(1 << 4)
 # define LF_NONE		(1 << 5)

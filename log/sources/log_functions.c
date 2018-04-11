@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 04:49:59 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/09 08:26:33 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/11 16:55:17 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ int				vlog_this(char *win_name, int l_flags, char *msg, va_list ap)
 int				log_this(char *win_name, int l_flags, char *msg, ...)
 {
 	va_list		args;
+	int			ret;
 
 	va_start(args, msg);
-	log_this(win_name, l_flags, msg, args);
+	ret = vlog_this(win_name, l_flags, msg, args);
 	va_end(args);
-	return (l_flags & LF_ERR ? FAILURE : SUCCESS);
+	return (ret);
 }
