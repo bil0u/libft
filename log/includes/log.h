@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/11 16:55:32 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/19 02:06:11 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define LOG_DIR			"log_files/"
 # define LOG_EXT			".txt"
 
-# define LOG_BUFF_SIZE	(1 << 15)
+# define LOG_BUFF_SIZE	(1 << 20)
 
 /*
 ** NOTE THAT FLAGS APPLY IF THE WINDOW IS NOT OPEN WHILE THE
