@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/19 02:06:11 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/20 22:51:59 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <inttypes.h>
 # include <sys/param.h>
+# include "../../libft_macros.h"
 # include "../../linked_lists/includes/linked_lists.h"
 
 # define SCRIPT_RPATH		"libft/log/scripts/launch_server.sh"
@@ -85,23 +86,22 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 
 # define LF_STDO		(1 << 3)
 # define LF_BOTH		(1 << 4)
-# define LF_NONE		(1 << 5)
 
 # define CLEAR_SCR		"\e[1;1H\e[2J"
 
-# define LOG_ERR		"{red}[ ERROR ]{eoc} "
-# define LOG_WARN		"{yellow}[ WARNING ]{eoc} "
-# define LOG_INFO		"{cyan}[ INFO ]{eoc} "
+# define LOG_ERR		COLR("[ ERROR ] ")
+# define LOG_WARN		COLY("[ WARNING ] ")
+# define LOG_INFO		COLC("[ INFO ] ")
 
 /*
 ** -- SERVER STYLE --
 */
 
-# define SERV_INIT		"{blue}Connection started by client{eoc}\n"
+# define SERV_INIT		COLB("Connection started by client\n")
 
-# define SERV_WELCOME1	"{yellow}[ Awesome logging tool v1.0 by"
-# define SERV_WELCOME2	" {cyan}upopee{yellow} ]{eoc}\n{green}"
-# define SERV_WELCOME3	"[ Listening on --> '{cyan}%s{green}' ]{eoc}\n"
+# define SERV_WELCOME1	COLY("[ Awesome logging tool v1.0 by ")
+# define SERV_WELCOME2	COLC("upopee") COLY(" ]\n")
+# define SERV_WELCOME3	COLG("[ Listening on --> '") COLC("%s") COLG("' ]\n")
 # define SERV_WELCOME	SERV_WELCOME1 SERV_WELCOME2 SERV_WELCOME3
 
 # define SERV_GDBYE1	"{red}[ Closing connection with '{cyan}%s{red}' ]\n"
@@ -111,7 +111,7 @@ int				close_fdfifo(int fd, char *fifo, int flags);
 # define SERV_GOODBYE	SERV_GDBYE1 SERV_GDBYE2 SERV_GDBYE3 SERV_GDBYE4
 
 # define SERV_NOPARAM	LOG_ERR "no parameter given\n"
-# define SERV_BADPARAM	LOG_ERR "{yellow}%d{eoc} parameters given\n"
+# define SERV_BADPARAM	LOG_ERR COLY("%d") " parameters given\n"
 
 # define SERV_RESTORING	"\033c" LOG_INFO "Restoring session\n\n"
 
