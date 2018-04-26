@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/05 19:12:11 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/20 22:51:59 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/25 09:45:04 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define WF_CLOSE		(1 << 2)
 # define WF_KEEP		(1 << 3)
 
-# define NB_MAXWIN		5
+# define NB_MAXWIN		10
 # define NAME_MAXLEN	32
 
 typedef struct	s_logwin
