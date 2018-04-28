@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/12 13:01:46 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/27 15:57:16 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/28 22:21:27 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int		ft_printf(const char *format, ...)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		str = ft_strnew(e.ret + 1);
+		if ((str = ft_strnew(e.ret + 1)) == NULL)
+			return (-1);
 		lstcpy_to_str(e.list, str);
 		write(STDOUT_FILENO, str, e.ret);
 		ft_strdel(&str);
@@ -56,7 +57,8 @@ int		ft_dprintf(int fd, const char *format, ...)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		str = ft_strnew(e.ret + 1);
+		if ((str = ft_strnew(e.ret + 1)) == NULL)
+			return (-1);
 		lstcpy_to_str(e.list, str);
 		write(fd, str, e.ret);
 		ft_strdel(&str);
@@ -100,7 +102,8 @@ int		ft_asprintf(char **ret, const char *format, ...)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		dst = ft_strnew(e.ret + 1);
+		if ((dst = ft_strnew(e.ret + 1)) == NULL)
+			return (-1);
 		lstcpy_to_str(e.list, dst);
 		*ret = dst;
 	}

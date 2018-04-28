@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:49:35 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/02 15:40:58 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/28 22:29:35 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	{
 		if (!(new->content = ft_memalloc(content_size)))
 			return (NULL);
-		new->content = ft_memmove(new->content, content, content_size);
+		ft_memmove(new->content, content, content_size);
 		new->content_size = content_size;
 	}
 	else

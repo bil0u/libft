@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 02:24:21 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/09 08:26:45 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/28 22:21:56 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int		ft_vprintf(const char *format, va_list ap)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		str = ft_strnew(e.ret + 1);
+		if ((str = ft_strnew(e.ret + 1)) == NULL)
+			return (-1);
 		lstcpy_to_str(e.list, str);
 		write(STDIN_FILENO, str, e.ret);
 		ft_strdel(&str);
@@ -56,7 +57,8 @@ int		ft_vdprintf(int fd, const char *format, va_list ap)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		str = ft_strnew(e.ret + 1);
+		if ((str = ft_strnew(e.ret + 1)) == NULL)
+			return (-1);
 		lstcpy_to_str(e.list, str);
 		write(fd, str, e.ret);
 		ft_strdel(&str);
@@ -100,7 +102,8 @@ int		ft_vasprintf(char **ret, const char *format, va_list ap)
 	e.ret = process_format(&e, &args);
 	if (e.ret > 0)
 	{
-		dst = ft_strnew(e.ret + 1);
+		if ((dst = ft_strnew(e.ret + 1)) == NULL)
+			return (-1);
 		lstcpy_to_str(e.list, dst);
 		*ret = dst;
 	}
