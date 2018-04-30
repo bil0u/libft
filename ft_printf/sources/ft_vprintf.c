@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 02:24:21 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/28 22:21:56 by upopee           ###   ########.fr       */
+/*   Updated: 2018/04/30 16:09:13 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		ft_vprintf(const char *format, va_list ap)
 		if ((str = ft_strnew(e.ret + 1)) == NULL)
 			return (-1);
 		lstcpy_to_str(e.list, str);
-		write(STDIN_FILENO, str, e.ret);
+		write(STDOUT_FILENO, str, e.ret);
 		ft_strdel(&str);
 	}
 	if (e.list)
