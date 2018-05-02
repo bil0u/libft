@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/04/28 22:39:23 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/02 04:15:00 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	ft_memdel(void **ap);
 void	*ft_memset(void *b, int c, size_t len);
 void	*ft_revmemset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
+
+void	*ft_u16set(void *b, int c, size_t len);
+void	*ft_u32set(void *b, int c, size_t len);
+
 
 void	*ft_memmove(void *dst, const void *src, size_t len);
 void	*ft_memcpy(void *dst, const void *src, size_t n);

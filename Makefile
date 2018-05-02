@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/04/28 22:39:15 by upopee           ###   ########.fr        #
+#    Updated: 2018/05/02 04:15:30 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,6 +65,9 @@ MEMORY_FILES =		ft_memalloc \
 					ft_memset \
 					ft_revmemset \
 					ft_bzero \
+					\
+					ft_u16set \
+					ft_u32set \
 					\
 					ft_memmove \
 					ft_memcpy \

@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_u16set.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/28 11:51:06 by upopee            #+#    #+#             */
-/*   Updated: 2018/05/02 03:04:27 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/02 04:16:24 by upopee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-void	*ft_memset(void *b, int c, size_t len)
+void	*ft_u16set(void *b, int c, size_t len)
 {
-	unsigned char	*tmp;
+	uint16_t *tmp;
 
 	if (len && b)
 	{
-		tmp = (unsigned char *)b;
+		tmp = (uint16_t *)b;
 		while (len-- > 0)
-			*tmp++ = c;
+			*(tmp++) = c;
 	}
 	return (b);
 }
