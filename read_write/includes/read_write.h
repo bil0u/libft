@@ -6,7 +6,7 @@
 /*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/26 23:02:36 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/03 21:33:38 by glictevo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stddef.h>
 
 int			get_next_line(const int fd, char **line);
+int			get_next_line_opt(const int fd, char **line, int option);
 int			gnl_end(const int fd);
 
 void		ft_putchar(char c);

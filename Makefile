@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
+#    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/05/03 12:33:23 by susivagn         ###   ########.fr        #
+#    Updated: 2018/05/03 21:31:08 by glictevo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -235,6 +235,7 @@ LIST_FILES =		ft_lstnew \
 RW_DIR =			read_write
 RW_SRC =			$(patsubst %,$(RW_DIR)/$(SRC_DIR)/%,$(RW_FILES:=.c))
 RW_FILES =			get_next_line \
+					get_next_line_opt \
 					gnl_end \
 					\
 					ft_putchar \
