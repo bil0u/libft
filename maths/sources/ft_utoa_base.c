@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/07 18:25:09 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/08 06:24:48 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/03 12:33:46 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char			*ft_utoa_base(uintmax_t n, const char *base)
 		return (NULL);
 	while (len-- > 0)
 	{
-		nbr[len] = base[ABS(n % base_n)];
+		nbr[len] = base[ft_abs(n % base_n)];
 		n /= (int)base_n;
 	}
 	return (nbr);

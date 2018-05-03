@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: upopee <upopee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/31 19:33:07 by upopee            #+#    #+#             */
-/*   Updated: 2018/02/26 22:34:28 by upopee           ###   ########.fr       */
+/*   Updated: 2018/05/03 12:31:48 by susivagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char			*ft_ltoa(long int n);
 char			*ft_ltoa_base(long int n, const char *base);
 char			*ft_imaxtoa(intmax_t n);
 char			*ft_imaxtoa_base(intmax_t n, const char *base);
+char			*ft_utoa_base(uintmax_t n, const char *base);
 size_t			ft_nbrlen_base(t_uint128_t n, unsigned int base_n);
 intmax_t		ft_sqrt(intmax_t nb);
 intmax_t		ft_sqrt_next(intmax_t nb);

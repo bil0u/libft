@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
+#    By: susivagn <susivagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/05/02 04:15:30 by upopee           ###   ########.fr        #
+#    Updated: 2018/05/03 12:33:23 by susivagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -169,6 +169,7 @@ MATH_FILES =		ft_atoi \
 					ft_ltoa_base \
 					ft_imaxtoa \
 					ft_imaxtoa_base \
+					ft_utoa_base \
 					\
 					ft_nbrlen_base \
 					ft_sqrt \
