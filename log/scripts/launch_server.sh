@@ -3,15 +3,15 @@
 # Open new Terminal window from the command line
 #
 # Usage:
-#	/bin/bash ./server_launch.sh -f [FILE] [-o [OPTIONS]]
-#		[FILE]			File to read on
+#	/bin/bash ./server_launch.sh -f [FIFO] [-o [OPTIONS]]
+#		[FIFO]			Fifo to read on
 #		[OPTIONS]		Options to pass to the log_server
 
 while getopts f:o: option
 do
 case "${option}"
 in
-f) FILE=${OPTARG};;
+f) FIFO=${OPTARG};;
 o) OPTIONS=${OPTARG};;
 esac
 done
@@ -24,7 +24,7 @@ exec osascript <<END
 tell application "iTerm2"
 	set currWin to (create window with default profile)
 	tell current session of currWin
-		write text "$RUN_CMD $FILE $OPTIONS"
+		write text "$RUN_CMD $FIFO $OPTIONS"
 	end tell
 end tell
 END
