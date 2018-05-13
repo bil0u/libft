@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/05/13 18:39:16 by upopee           ###   ########.fr        #
+#    Updated: 2018/05/13 20:54:20 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,15 +16,7 @@ NAME =				libft
 LIB =				$(NAME).a
 CC =				gcc
 CFLAGS =			-Wall -Werror -Wextra
-CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
-					-I $(CHAR_DIR)/$(INC_DIR) \
-					-I $(STR_DIR)/$(INC_DIR) \
-					-I $(WSTR_DIR)/$(INC_DIR) \
-					-I $(MATH_DIR)/$(INC_DIR) \
-					-I $(FT_PRINTF_DIR)/$(INC_DIR) \
-					-I $(LIST_DIR)/$(INC_DIR) \
-					-I $(RW_DIR)/$(INC_DIR) \
-					-I $(LOG_DIR)/$(INC_DIR)
+CPPFLAGS =			$(INCLUDES)
 DEPFLAGS =			-MMD
 
 SHELL =				/bin/bash
@@ -43,6 +35,16 @@ VPATH =				$(MEMORY_DIR)/$(SRC_DIR):\
 					$(LIST_DIR)/$(SRC_DIR):\
 					$(RW_DIR)/$(SRC_DIR):\
 					$(LOG_DIR)/$(SRC_DIR)\
+
+INCLUDES =			-I $(MEMORY_DIR)/$(INC_DIR) \
+					-I $(CHAR_DIR)/$(INC_DIR) \
+					-I $(STR_DIR)/$(INC_DIR) \
+					-I $(WSTR_DIR)/$(INC_DIR) \
+					-I $(MATH_DIR)/$(INC_DIR) \
+					-I $(FT_PRINTF_DIR)/$(INC_DIR) \
+					-I $(LIST_DIR)/$(INC_DIR) \
+					-I $(RW_DIR)/$(INC_DIR) \
+					-I $(LOG_DIR)/$(INC_DIR)
 
 SOURCES =			$(MEMORY_SRC) \
 					$(CHAR_SRC) \
@@ -301,16 +303,18 @@ all:
 	@$(MAKE) -j $(LOG_SERVER)
 	@$(MAKE) -j $(LOG_CLIENT)
 
-$(NAME): $(OBJ_DIR) $(LIBFT_OBJS)
+$(NAME): $(LIB)
+
+$(LIB): $(OBJ_DIR) $(LIBFT_OBJS)
 	@$(AR) $(LIB) $(LIBFT_OBJS)
 	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(NAME)$(EOC) : Library created\n"
 
-$(LOG_SERVER): $(OBJ_DIR) $(LOGSERV_OBJS)
-	@$(CC) -o $@ $(LOGSERV_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS)
+$(LOG_SERVER): $(OBJ_DIR) $(LOGSERV_OBJS) $(LIBFT_OBJS)
+	@$(CC) -o $@ $(LOGSERV_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
 	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(LOG_SERVER)$(EOC) : Binary created\n"
 
-$(LOG_CLIENT): $(OBJ_DIR) $(LOGCLT_OBJS)
-	@$(CC) -o $@ $(LOGCLT_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS)
+$(LOG_CLIENT): $(OBJ_DIR) $(LOGCLT_OBJS) $(LIBFT_OBJS)
+	@$(CC) -o $@ $(LOGCLT_OBJS) $(LIBFT_OBJS) $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
 	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(LOG_CLIENT)$(EOC) : Binary created\n"
 
 $(OBJ_DIR):
