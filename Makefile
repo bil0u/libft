@@ -6,7 +6,7 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/05/03 21:31:08 by glictevo         ###   ########.fr        #
+#    Updated: 2018/05/13 18:31:52 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,14 +33,24 @@ RMDIR =				rm -rf
 RM =				rm -f
 NORM =				norminette
 
-VPATH =				$(MEMORY_DIR)/$(SRC_DIR):$(CHAR_DIR)/$(SRC_DIR):\
-					$(STR_DIR)/$(SRC_DIR):$(WSTR_DIR)/$(SRC_DIR):\
-					$(MATH_DIR)/$(SRC_DIR):$(FT_PRINTF_DIR)/$(SRC_DIR):\
-					$(LIST_DIR)/$(SRC_DIR):$(RW_DIR)/$(SRC_DIR):\
+VPATH =				$(MEMORY_DIR)/$(SRC_DIR):\
+					$(CHAR_DIR)/$(SRC_DIR):\
+					$(STR_DIR)/$(SRC_DIR):\
+					$(WSTR_DIR)/$(SRC_DIR):\
+					$(MATH_DIR)/$(SRC_DIR):\
+					$(FT_PRINTF_DIR)/$(SRC_DIR):\
+					$(LIST_DIR)/$(SRC_DIR):\
+					$(RW_DIR)/$(SRC_DIR):\
 					$(LOG_DIR)/$(SRC_DIR)\
 
-SOURCES =			$(MEMORY_SRC) $(CHAR_SRC) $(STR_SRC) $(WSTR_SRC) \
-					$(MATH_SRC) $(FT_PRINTF_SRC) $(LIST_SRC) $(RW_SRC) \
+SOURCES =			$(MEMORY_SRC) \
+					$(CHAR_SRC) \
+					$(STR_SRC) \
+					$(WSTR_SRC) \
+					$(MATH_SRC) \
+					$(FT_PRINTF_SRC) \
+					$(LIST_SRC) \
+					$(RW_SRC) \
 					$(LOG_SRC) \
 
 LIBFT_OBJS =		$(patsubst %,$(OBJ_DIR)/%,$(notdir $(SOURCES:.c=.o)))
