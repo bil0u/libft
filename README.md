@@ -2,7 +2,7 @@
 
 This is my personal toolkit for C programming based on the Standard C Library.  
 
-Note: this library has only been tested on macOS and ArchLinux  
+Note: this code has only been tested on macOS and ArchLinux  
 
 ## Usage
 
