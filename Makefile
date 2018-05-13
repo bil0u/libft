@@ -6,13 +6,14 @@
 #    By: upopee <upopee@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/28 11:42:57 by upopee            #+#    #+#              #
-#    Updated: 2018/05/13 18:31:52 by upopee           ###   ########.fr        #
+#    Updated: 2018/05/13 18:39:16 by upopee           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # -- VARIABLES --
 
-NAME =				libft.a
+NAME =				libft
+LIB =				$(NAME).a
 CC =				gcc
 CFLAGS =			-Wall -Werror -Wextra
 CPPFLAGS =			-I $(MEMORY_DIR)/$(INC_DIR) \
@@ -289,7 +290,7 @@ $(OBJ_DIR)/%.o: %.c Makefile
 	@$(eval PERCENT=$(shell echo $$(($(INDEX)*100/$(NB)))))
 	@$(eval TO_DO=$(shell echo $$((20-$(INDEX)*20/$(NB) - 1))))
 	@$(eval COLOR=$(shell list=(160 196 202 208 215 221 226 227 190 154 118 82 46); index=$$(($(PERCENT) * $${#list[@]} / 100)); echo "$${list[$$index]}"))
-	@printf "\r> $(YELLOW)libft$(EOC) : Building objects...    %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s%s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
+	@printf "\r> $(YELLOW)$(NAME)$(EOC) : Building objects...    %2d%% $(CNO)[`printf '#%.0s' {0..$(DONE)}`%*s]$(YELLOW)%*.*s%s$(EOC)$(ERASELN)" $(PERCENT) $(COLOR) $(TO_DO) "" $(DELTA) $(DELTA) "$(shell echo "$@" | sed 's/^.*\///')"
 	@$(CC) -c $< -o $@ $(CFLAGS) $(CPPFLAGS) $(DEPFLAGS)
 	@$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
 
@@ -301,7 +302,7 @@ all:
 	@$(MAKE) -j $(LOG_CLIENT)
 
 $(NAME): $(OBJ_DIR) $(LIBFT_OBJS)
-	@$(AR) $(NAME) $(LIBFT_OBJS)
+	@$(AR) $(LIB) $(LIBFT_OBJS)
 	@printf "\r$(ERASELN)$(GREEN_B)✓$(EOC) $(YELLOW)$(NAME)$(EOC) : Library created\n"
 
 $(LOG_SERVER): $(OBJ_DIR) $(LOGSERV_OBJS)
@@ -319,7 +320,7 @@ clean:
 	@if [ -e $(OBJ_DIR) ]; \
 	then \
 		$(RMDIR) $(OBJ_DIR); \
-		printf "$(RED_B)✗$(EOC) $(YELLOW)libft$(EOC) : Objects deleted\n"; \
+		printf "$(RED_B)✗$(EOC) $(YELLOW)$(NAME)$(EOC) : Objects deleted\n"; \
 	fi;
 
 cleanlogs:
@@ -330,9 +331,9 @@ cleanlogs:
 	fi;
 
 fclean: clean
-	@if [ -e $(NAME) ]; \
+	@if [ -e $(LIB) ]; \
 	then \
-		$(RM) $(NAME); \
+		$(RM) $(LIB); \
 		printf "$(RED_B)✗$(EOC) $(YELLOW)$(NAME)$(EOC) : Library deleted\n"; \
 	fi;
 	@if [ -e $(LOG_SERVER) ]; \
@@ -361,7 +362,7 @@ norm:
 # ------------------------------------------------------------------------------
 
 LEN_NAME =	`printf "%s" $(NAME) |wc -c`
-DELTA =		$$(echo "$$(tput cols)-52-$(LEN_NAME)"|bc)
+DELTA =		$$(echo "$$(tput cols)-54-$(LEN_NAME)"|bc)
 NB =		$(words $(SOURCES))
 INDEX=		0
 
