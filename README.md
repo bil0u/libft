@@ -14,7 +14,7 @@ $ git clone https://github.com/bil0u/libft.git
 You have to specify the include path `-I ./libft` and the library flags `-lft -Llibft`  
 
 Don't forget to `#include "libft.h"` or `"libft_macros.h"`
-(Note that 'libft.h' already includes 'libft_macros.h')  
+(Note that `libft.h` already includes `libft_macros.h`)  
 
 A Makefile is provided, just run in your shell
 ```sh
@@ -66,28 +66,28 @@ See [log.h](log/includes/log.h) for details
 
 * all  
    Compile all the library components  
-   
+
 * libft  
    Compile only the library  
-   
+
 * log_server  
    Compile only the logging server binary  
-   
+
 * log_client  
    Compile only the logging client binary  
-   
+
 * clean  
    Delete all the objects files  
-   
+
 * fclean  
    Delete both objects and binaries  
-   
+
 * re  
    Runs the `fclean` and `all` rules  
-   
+
 * norm  
-   Runs the `norminette` command on all the sources and includes directories (Only usable in 42 clusters)  
-   
+   Runs the `norminette` command on all the sources and includes subdirectories (Only usable in 42 clusters)  
+
 ## License
 
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.txt](LICENSE.txt) file for details
