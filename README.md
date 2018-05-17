@@ -75,15 +75,7 @@ $ <main_directory>/libft/log_server /tmp/libft_log.<window_name> [-scl]
 * `<main_directory>`  
    This is the path where you cloned this project  
 * `<window_name>`  
-
-   | Name to type | Debug level |
-   | ------------ | ----------- |
-   | `inf`        | 1           |
-   | `mem`        | 2           |
-   | `ins`        | 4           |
-   | `arg`        | 8           |
-   | `job`        | 16          |
-   | `reg`        | 32          |
+   The name you want to give to the window/fifo. **Ex:** if type `[...] /tmp/libft_log.mywin [...]`, you'll have to use the string `"mywin"` when calling the functions `new_logwin()` & `log_this()`.
 * `-s`  
    Save all printed output in a log file, in the `<main_directory>/libft/log_files` directory  
 * `-c`  
